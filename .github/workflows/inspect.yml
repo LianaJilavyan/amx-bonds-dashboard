@@ -1,15 +1,21 @@
 # .github/workflows/inspect.yml
-# Manual-only helper: fetches the raw AMX snapshot and prints the first part
-# of it into the run log, so the real field names can be read without running
-# anything on a local machine. Run it from Actions → inspect → Run workflow.
+# Manual-only helper. Two modes, chosen by the ISIN input:
+#   - ISIN left EMPTY  → dumps the market snapshot (all bonds), as before.
+#   - ISIN filled in   → dumps getInstrument/{ISIN} (detail + history),
+#                        which is what the backfill script will consume.
+# Run from Actions → inspect → Run workflow.
 name: inspect
 
 on:
   workflow_dispatch:
     inputs:
+      isin:
+        description: "ISIN to inspect (leave empty for the market snapshot)"
+        default: ""
+        required: false
       chars:
         description: "How many characters of the response to print"
-        default: "6000"
+        default: "8000"
         required: false
 
 jobs:
@@ -17,14 +23,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show AMX response
+        env:
+          ISIN: ${{ inputs.isin }}
+          CHARS: ${{ inputs.chars }}
         run: |
-          curl -s "https://amx.am/api/getMarketData/corporate_bonds" \
+          if [ -n "$ISIN" ]; then
+            URL="https://amx.am/api/getInstrument/$ISIN"
+            REF="https://amx.am/en/instrument_page/$ISIN/historical"
+          else
+            URL="https://amx.am/api/getMarketData/corporate_bonds"
+            REF="https://amx.am/en/market_data/corporate_bonds"
+          fi
+          echo "Fetching: $URL"
+          curl -s "$URL" \
             -H "accept: */*" \
-            -H "referer: https://amx.am/en/market_data/corporate_bonds" \
+            -H "referer: $REF" \
             -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36" \
             -o response.txt
-          echo "=== First ${{ inputs.chars }} characters of the response ==="
-          head -c ${{ inputs.chars }} response.txt
+          echo "=== Response size: $(wc -c < response.txt) bytes ==="
+          echo "=== First $CHARS characters ==="
+          head -c "$CHARS" response.txt
           echo ""
-          echo "=== Any lines mentioning NMC / Mortgage (for issuer-name check) ==="
-          grep -io '.\{0,120\}\(nmc\|mortgage\).\{0,120\}' response.txt | head -20 || echo "(none found in raw text)"
+          if [ -n "$ISIN" ]; then
+            echo "=== Top-level keys (if JSON) ==="
+            head -c 2000000 response.txt | grep -o '"[a-zA-Z_]*":' | sort | uniq -c | sort -rn | head -40
+          else
+            echo "=== Any lines mentioning NMC / Mortgage (for issuer-name check) ==="
+            grep -io '.\{0,120\}\(nmc\|mortgage\).\{0,120\}' response.txt | head -20 || echo "(none found in raw text)"
+          fi
