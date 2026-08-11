@@ -1,20 +1,20 @@
 // scripts/report.mjs
-// Builds a portfolio + daily-market report "as of" a date and emails it via Resend.
-// Triggered by .github/workflows/send-report.yml (Actions -> send-report -> Run workflow).
+// Builds a portfolio + daily-market report "as of" a date and WRITES it into the
+// repo as an HTML file. No email, no external service. The send-report workflow
+// commits the file back; you then open it from GitHub or the deployed site.
 //
-// Reads ONLY committed data — no network to AMX, no write to the repo:
+// Reads ONLY committed data:
 //   data/portfolios.json           (array exported from the Portfolios tab)
-//   data/snapshots/YYYY-MM-DD.json  (that day's market snapshot; falls back to the
-//                                    nearest EARLIER day if the exact date is missing)
+//   data/snapshots/YYYY-MM-DD.json  (that day's snapshot; falls back to nearest earlier)
 //   data/enrichment.json           (coupon/maturity/outstanding per ISIN, optional)
 //   data/meta.json                 (latestDate, used when DATE="latest")
 //
-// Env (provided by the workflow):
-//   DATE            "latest" | "YYYY-MM-DD" | "DD Mon YYYY"  (default "latest")
-//   EMAIL          recipient address (required)
-//   RESEND_API_KEY  Resend API key (GitHub Actions secret; if unset, the report is
-//                   printed to the log instead of sent, so you can dry-run safely)
-//   REPORT_FROM     sender address (optional; defaults to Resend's shared test sender)
+// Writes:
+//   data/reports/report-<usedDate>.html   (dated, permanent)
+//   data/reports/latest.html              (always the most recent run)
+//
+// Env (from the workflow):
+//   DATE   "latest" | "YYYY-MM-DD" | "DD Mon YYYY"  (default "latest")
 
 import fs from "node:fs";
 import path from "node:path";
@@ -22,6 +22,7 @@ import path from "node:path";
 const ROOT = process.cwd();
 const DATA = path.join(ROOT, "data");
 const SNAP_DIR = path.join(DATA, "snapshots");
+const OUT_DIR = path.join(DATA, "reports");
 const TZ = "Asia/Yerevan";
 const DASH = "\u2014";
 
@@ -86,7 +87,7 @@ function parseDateInput(raw, latestDate) {
     const mm = MONTHS[m[2].slice(0, 3).toLowerCase()];
     if (mm) return `${m[3]}-${mm}-${m[1].padStart(2, "0")}`;
   }
-  return s; // fall through; the snapshot lookup will fail loudly if unparseable
+  return s; // fall through; snapshot lookup fails loudly if unparseable
 }
 
 function snapshotDates() {
@@ -165,7 +166,7 @@ const summary = {
   medAmdYtm: median(amd.map((b) => num(b.ytm)).filter((v) => v != null)),
 };
 
-// portfolios (mirror the client's "light" metrics + add the fitted-curve spread)
+// portfolios (client's "light" metrics + the fitted-curve spread)
 const portfolios = readJson(path.join(DATA, "portfolios.json"), []) || [];
 function computePortfolio(pf) {
   const holdings = (pf.holdings || []).map((h) => {
@@ -241,7 +242,7 @@ const portfolioHtml = pfReports.length === 0
       </table>`;
   }).join("");
 
-const html = `<!doctype html><html><body style="margin:0;background:#f6f6f8">
+const html = `<!doctype html><html><head><meta charset="utf-8"><title>NMC bond report — ${esc(usedDate)}</title></head><body style="margin:0;background:#f6f6f8">
   <div style="max-width:820px;margin:0 auto;padding:24px;background:#fff;font-family:Arial,sans-serif;color:#222">
     <div style="border-bottom:4px solid ${RED};padding-bottom:12px">
       <div style="font:800 22px Arial;color:${NAVY}">Armenian Corporate Bonds — NMC report</div>
@@ -268,25 +269,10 @@ const html = `<!doctype html><html><body style="margin:0;background:#f6f6f8">
     </p>
   </div></body></html>`;
 
-/* -------------------------------- send ---------------------------------- */
-const EMAIL = (process.env.EMAIL || "").trim();
-if (!EMAIL) throw new Error("EMAIL env var is required.");
-const FROM = (process.env.REPORT_FROM || "NMC Bonds <onboarding@resend.dev>").trim();
-const KEY = process.env.RESEND_API_KEY;
-const subject = `NMC bond report — as of ${usedDate}`;
-
-if (!KEY) {
-  console.log("RESEND_API_KEY not set — DRY RUN. The report HTML follows; nothing was emailed.\n");
-  console.log(html);
-  process.exit(0);
-}
-
-const res = await fetch("https://api.resend.com/emails", {
-  method: "POST",
-  headers: { Authorization: `Bearer ${KEY}`, "Content-Type": "application/json" },
-  body: JSON.stringify({ from: FROM, to: [EMAIL], subject, html }),
-});
-if (!res.ok) {
-  throw new Error(`Resend failed (${res.status}): ${await res.text()}`);
-}
-console.log(`Sent "${subject}" to ${EMAIL}.`);
+/* ------------------------------- write ---------------------------------- */
+fs.mkdirSync(OUT_DIR, { recursive: true });
+const datedPath = path.join(OUT_DIR, `report-${usedDate}.html`);
+const latestPath = path.join(OUT_DIR, "latest.html");
+fs.writeFileSync(datedPath, html, "utf8");
+fs.writeFileSync(latestPath, html, "utf8");
+console.log(`Wrote ${path.relative(ROOT, datedPath)} and ${path.relative(ROOT, latestPath)} (as of ${usedDate}).`);
