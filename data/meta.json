@@ -1,8 +1,10 @@
 {
- "latestDate": null,
- "dates": [],
- "bondCount": 0,
- "lastRunStatus": "never_run",
+ "latestDate": "2026-08-11",
+ "dates": [
+  "2026-08-11"
+ ],
+ "bondCount": 212,
+ "lastRunStatus": "ok",
  "lastError": null,
- "lastRunAt": null
+ "lastRunAt": "2026-08-11T19:08:09.885Z"
 }
