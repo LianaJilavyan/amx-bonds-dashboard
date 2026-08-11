@@ -19,10 +19,9 @@ const STALE_DAYS = 20; // matches ARCHITECTURE.md / reference dashboard
 type ModeKey = "ytm" | "ytm_close" | "price" | "close" | "coupon";
 type HistKey = keyof Pick<HistoryPoint, "pb" | "pa" | "pc" | "yb" | "ya" | "yc">;
 
-const MODES: Record
-  ModeKey,
-  { label: string; axis: string; get: (b: UiBond) => number | null; hk: HistKey; noHist?: boolean }
-> = {
+type ModeDef = { label: string; axis: string; get: (b: UiBond) => number | null; hk: HistKey; noHist?: boolean };
+
+const MODES: Record<ModeKey, ModeDef> = {
   ytm:       { label: "AMX bid yield",  axis: "Bid YTM (%)",   get: (b) => b.ytm,       hk: "yb" },
   ytm_close: { label: "AMX close yield", axis: "Close YTM (%)", get: (b) => b.ytm_close, hk: "yc" },
   price:     { label: "AMX bid price",  axis: "Bid price",      get: (b) => b.price,     hk: "pb" },
