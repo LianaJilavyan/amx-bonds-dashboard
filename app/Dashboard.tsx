@@ -1,14 +1,17 @@
 "use client";
 
 // app/Dashboard.tsx
-// The whole interactive dashboard, reproducing STYLE_TEMPLATE.html. Pure React +
-// inline SVG (no chart library, per ARCHITECTURE.md). It receives the merged bond
-// array and meta from the server component; per-ISIN history for the detail
-// sparkline is fetched on demand from /api/history/[isin].
+// The interactive dashboard, reproducing STYLE_TEMPLATE.html. Pure React + inline
+// SVG (no chart library, per ARCHITECTURE.md). Increment 1: the single page is now
+// split into tabs (Overview · Yield curve · Screener · Analytics · Portfolios).
+// The masthead + freshness header stay global above the tab bar. Filter state lives
+// here and is shared by the Yield-curve and Screener tabs via <Filters/>.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { HistoryPoint } from "@/lib/normalize";
 import type { UiBond, Meta } from "@/app/types";
+import AnalyticsTab from "@/app/tabs/AnalyticsTab";
+import PortfoliosTab from "@/app/tabs/PortfoliosTab";
 
 const STALE_DAYS = 20; // matches ARCHITECTURE.md / reference dashboard
 
@@ -16,7 +19,7 @@ const STALE_DAYS = 20; // matches ARCHITECTURE.md / reference dashboard
 type ModeKey = "ytm" | "ytm_close" | "price" | "close" | "coupon";
 type HistKey = keyof Pick<HistoryPoint, "pb" | "pa" | "pc" | "yb" | "ya" | "yc">;
 
-const MODES: Record<
+const MODES: Record
   ModeKey,
   { label: string; axis: string; get: (b: UiBond) => number | null; hk: HistKey; noHist?: boolean }
 > = {
@@ -24,8 +27,6 @@ const MODES: Record<
   ytm_close: { label: "AMX close yield", axis: "Close YTM (%)", get: (b) => b.ytm_close, hk: "yc" },
   price:     { label: "AMX bid price",  axis: "Bid price",      get: (b) => b.price,     hk: "pb" },
   close:     { label: "AMX close price", axis: "Close price",   get: (b) => b.close,     hk: "pc" },
-  // Coupon is static — there is no daily coupon series, so the sparkline falls
-  // back to bid-yield history and says so.
   coupon:    { label: "Coupon",         axis: "Coupon (%)",     get: (b) => b.coupon,    hk: "yb", noHist: true },
 };
 
@@ -70,31 +71,42 @@ function linreg(pts: { x: number; y: number }[]): { a: number; b: number } | nul
   return { a: (sy - b * sx) / n, b };
 }
 
+/* ---------------- tabs ---------------- */
+type TabKey = "overview" | "curve" | "screener" | "analytics" | "portfolios";
+const TABS: { k: TabKey; label: string }[] = [
+  { k: "overview",   label: "Overview" },
+  { k: "curve",      label: "Yield curve" },
+  { k: "screener",   label: "Screener" },
+  { k: "analytics",  label: "Analytics" },
+  { k: "portfolios", label: "Portfolios" },
+];
+
 /* ============================================================================ */
 
 export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta }) {
   const latestDate = meta.latestDate;
 
+  /* ---- tab ---- */
+  const [tab, setTab] = useState<TabKey>("overview");
+
   /* ---- filter + view state (ids mirror STYLE_TEMPLATE.html) ---- */
   const [qIsin, setQIsin] = useState("");
   const [qIssuer, setQIssuer] = useState("");
   const [mode, setMode] = useState<ModeKey>("ytm");
-  const [ccy, setCcy] = useState("");
+  const [ccy, setCcy] = useState("AMD");          // default currency = AMD
   const [mat, setMat] = useState("");
+  const [issuerTypeF, setIssuerTypeF] = useState(""); // "" = all issuer types
   const [onlyNmc, setOnlyNmc] = useState(false);
   const [hideStale, setHideStale] = useState(false);
 
-  const [tableOpen, setTableOpen] = useState(false);
   const [sortKey, setSortKey] = useState<string>("ytm");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [selected, setSelected] = useState<string | null>(null);
 
   const M = MODES[mode];
 
-  /* ---- staleness helper ---- */
   const isStale = (b: UiBond) => b.daysSinceTrade === null || b.daysSinceTrade > STALE_DAYS;
 
-  /* ---- currency options + datalists (built once from the universe) ---- */
   const ccyOptions = useMemo(
     () => Array.from(new Set(bonds.map((b) => b.ccy))).sort(),
     [bonds],
@@ -104,19 +116,20 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
     [bonds],
   );
 
-  /* ---- filtering (drives BOTH the scatter and the table) ---- */
+  /* ---- filtering (drives scatter, table and analytics) ---- */
   const filtered = useMemo(() => {
     const qi = qIsin.trim().toUpperCase();
     const qs = qIssuer.trim().toLowerCase();
     return bonds.filter((b) => {
       if (qi && !b.isin.toUpperCase().includes(qi)) return false;
       if (qs && !b.issuer.toLowerCase().includes(qs)) return false;
+      if (issuerTypeF && b.issuerType !== issuerTypeF) return false;
       if (ccy && b.ccy !== ccy) return false;
       if (onlyNmc && !b.isNmc) return false;
       if (hideStale && isStale(b)) return false;
       if (mat) {
         const y = b.years;
-        if (y === null) return false; // no maturity → excluded from a maturity bucket
+        if (y === null) return false;
         if (mat === "0-1" && !(y < 1)) return false;
         if (mat === "1-3" && !(y >= 1 && y < 3)) return false;
         if (mat === "3-5" && !(y >= 3 && y < 5)) return false;
@@ -124,9 +137,9 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
       }
       return true;
     });
-  }, [bonds, qIsin, qIssuer, ccy, mat, onlyNmc, hideStale]);
+  }, [bonds, qIsin, qIssuer, issuerTypeF, ccy, mat, onlyNmc, hideStale]);
 
-  /* ---- headline stats (whole universe, not the filtered subset) ---- */
+  /* ---- headline stats (whole universe) ---- */
   const stats = useMemo(() => {
     const amdYtm = bonds.filter((b) => b.ccy === "AMD" && b.ytm != null).map((b) => b.ytm as number);
     const tradedWeek = bonds.filter((b) => b.daysSinceTrade != null && b.daysSinceTrade <= 7).length;
@@ -159,7 +172,7 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
     return [...filtered].sort((a, b) => {
       const va = get(a), vb = get(b);
       if (va === null && vb === null) return 0;
-      if (va === null) return 1;  // nulls always last
+      if (va === null) return 1;
       if (vb === null) return -1;
       if (typeof va === "string" || typeof vb === "string") {
         return String(va).localeCompare(String(vb)) * dir;
@@ -173,7 +186,6 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
       setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     } else {
       setSortKey(key);
-      // text columns default A→Z, numeric columns default high→low
       setSortDir(["isin", "issuer", "ccy", "maturity"].includes(key) ? "asc" : "desc");
     }
   }
@@ -204,6 +216,16 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
 
   const fresh = meta.lastRunStatus === "ok";
 
+  /* ---- shared filter bar props ---- */
+  const filterProps = {
+    bonds, issuerList, ccyOptions,
+    qIsin, setQIsin, qIssuer, setQIssuer,
+    issuerTypeF, setIssuerTypeF,
+    ccy, setCcy, mat, setMat,
+    onlyNmc, setOnlyNmc, hideStale, setHideStale,
+    mode, setMode,
+  };
+
   return (
     <>
       {/* ============ MASTHEAD ============ */}
@@ -225,7 +247,7 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
       </div></div>
 
       <div className="wrap">
-        {/* ============ HEADER ============ */}
+        {/* ============ HEADER (global) ============ */}
         <header>
           <div className="sub" id="stamp">
             {`MARKET DATE ${latestDate} \u00b7 ${bonds.length} INSTRUMENTS`}
@@ -244,200 +266,188 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
           </p>
         </header>
 
-        {/* ============ STAT CARDS ============ */}
-        <div className="cards" id="cards">
-          <div className="card">
-            <div className="k">Instruments</div>
-            <div className="v">{stats.total}</div>
-            <div className="n">active</div>
-          </div>
-          <div className="card">
-            <div className="k">Median bid YTM</div>
-            <div className="v">{stats.medianAmdYtm === null ? DASH : fmt(stats.medianAmdYtm) + "%"}</div>
-            <div className="n">AMD bonds</div>
-          </div>
-          <div className="card nmc">
-            <div className="k">NMC bonds</div>
-            <div className="v">{stats.nmc}</div>
-            <div className="n">in universe</div>
-          </div>
-          <div className="card">
-            <div className="k">Traded this week</div>
-            <div className="v">{stats.tradedWeek}</div>
-            <div className="n">of {stats.total}</div>
-          </div>
-        </div>
-
-        {/* ============ MAIN PAIR: scatter + detail ============ */}
-        <div className="pair">
-          {/* ---- scatter panel ---- */}
-          <div className="panel">
-            <h2>
-              <span>Yield to maturity against maturity</span>
-              <em id="fitNote">{scatterNote(filtered, M)}</em>
-            </h2>
-            <div className="controls">
-              <input id="qIsin" type="search" placeholder="ISIN" style={{ width: 130 }}
-                     list="isinList" value={qIsin} onChange={(e) => setQIsin(e.target.value)} />
-              <datalist id="isinList">
-                {bonds.map((b) => <option key={b.isin} value={b.isin} />)}
-              </datalist>
-              <input id="qIssuer" type="search" placeholder="Issuer (type to search)" style={{ width: 190 }}
-                     list="issuerList" value={qIssuer} onChange={(e) => setQIssuer(e.target.value)} />
-              <datalist id="issuerList">
-                {issuerList.map((n) => <option key={n} value={n} />)}
-              </datalist>
-              {/* QUOTATION MODE — mirrors the AMX site's Quotation dropdown */}
-              <select id="fMode" title="What both charts plot"
-                      value={mode} onChange={(e) => setMode(e.target.value as ModeKey)}>
-                <option value="ytm">AMX bid yield</option>
-                <option value="ytm_close">AMX close yield</option>
-                <option value="price">AMX bid price</option>
-                <option value="close">AMX close price</option>
-                <option value="coupon">Coupon</option>
-              </select>
-              <select id="fCcy" title="Currency" value={ccy} onChange={(e) => setCcy(e.target.value)}>
-                <option value="">All currencies</option>
-                {ccyOptions.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
-              <select id="fMat" value={mat} onChange={(e) => setMat(e.target.value)}>
-                <option value="">All maturities</option>
-                <option value="0-1">Under 1 year</option>
-                <option value="1-3">1 to 3 years</option>
-                <option value="3-5">3 to 5 years</option>
-                <option value="5-99">Over 5 years</option>
-              </select>
-              <label className="toggle">
-                <input type="checkbox" id="onlyNmc" checked={onlyNmc}
-                       onChange={(e) => setOnlyNmc(e.target.checked)} />NMC only
-              </label>
-              <label className="toggle" id="staleLbl"
-                     title="Hides bonds whose last trade is more than 20 days old.">
-                <input type="checkbox" id="hideStale" checked={hideStale}
-                       onChange={(e) => setHideStale(e.target.checked)} />
-                Hide stale <span className="qm">?</span>
-              </label>
-            </div>
-            <div className="legend">
-              <span><i style={{ background: "var(--nmc-red)" }} />NMC</span>
-              <span><i style={{ background: "none", border: "1.5px solid var(--nmc-navy)" }} />Other issuers</span>
-              <span><i style={{ background: "none", border: "1.5px dashed var(--nmc-navy)" }} />Fitted curve</span>
-              <span>Dot size = amount outstanding</span>
-            </div>
-            <div className="body">
-              <Scatter bonds={filtered} mode={M} selected={selected} onSelect={setSelected} />
-            </div>
-            <div className="method">
-              Each dot is one bond: <b>x</b> = years to maturity, <b>y</b> = <b>{M.axis}</b>,
-              dot size ∝ amount outstanding. The dashed line is an ordinary least-squares
-              fit across the plotted bonds — a rough market curve, not a model.
-              Bonds without a maturity or without a <code>{M.axis}</code> value are omitted
-              from the chart but remain in the table below.
-            </div>
-          </div>
-
-          {/* ---- detail panel ---- */}
-          <div className="panel">
-            <h2>
-              <span>Selected instrument</span>
-              <em id="selName">{selBond ? selBond.ticker : ""}</em>
-            </h2>
-            {!selBond ? (
-              <div id="detail">
-                <div className="empty">Click any bond in the chart to see its history</div>
-              </div>
-            ) : (
-              <div id="detail">
-                <div className="facts">
-                  <div><span>Coupon</span>{selBond.coupon == null ? DASH : fmt(selBond.coupon) + "%"}</div>
-                  <div><span>Maturity</span>{selBond.maturity || DASH}</div>
-                  <div><span>Currency</span>{selBond.ccy}</div>
-                  <div><span>Outstanding</span>{fmtAmd(selBond.outstanding_amd)}{selBond.outstanding_amd == null ? "" : " " + selBond.ccy}</div>
-                  <div>
-                    <span>Last trade</span>
-                    {selBond.last_trade
-                      ? `${selBond.last_trade} (${selBond.daysSinceTrade}d)`
-                      : DASH}
-                    {isStale(selBond) ? <span className="tag" style={{ marginLeft: 6 }}>stale</span> : null}
-                  </div>
-                </div>
-                <Sparkline
-                  history={history}
-                  loading={histLoading}
-                  mode={M}
-                  ccyOrPct={mode === "price" || mode === "close" ? "" : "%"}
-                />
-                <div className="method">
-                  Sparkline: <b>{M.axis}</b> over time
-                  {M.noHist ? " (coupon has no daily series, so bid yield is shown)" : ""}.
-                  Source: <code>/api/history/{selBond.isin}</code>.
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ============ INSTRUMENT TABLE (collapsible) ============ */}
-        <div className="panel">
-          <h2>
-            <span>Investment list</span>
-            <em id="count">{filtered.length} shown</em>
-          </h2>
-          <div className="disclosure">
-            <button className="disclose" id="toggleTable" aria-expanded={tableOpen}
-                    aria-controls="tblWrap" onClick={() => setTableOpen((o) => !o)}>
-              <span className="chev" aria-hidden="true">&#9662;</span>
-              <span id="tlbl">{tableOpen ? "Hide instruments" : "Show instruments"}</span>
+        {/* ============ TAB BAR ============ */}
+        <nav className="tabs" role="tablist" aria-label="Dashboard sections">
+          {TABS.map((t) => (
+            <button key={t.k} role="tab" className="tab" id={`tab-${t.k}`}
+                    aria-selected={tab === t.k} aria-controls={`panel-${t.k}`}
+                    onClick={() => setTab(t.k)}>
+              {t.label}
             </button>
-            <span className="note">The filters above apply to this list</span>
+          ))}
+        </nav>
+
+        {/* ============ OVERVIEW ============ */}
+        {tab === "overview" && (
+          <div className="tabpanel" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+            <div className="cards" id="cards">
+              <div className="card">
+                <div className="k">Instruments</div>
+                <div className="v">{stats.total}</div>
+                <div className="n">active</div>
+              </div>
+              <div className="card">
+                <div className="k">Median bid YTM</div>
+                <div className="v">{stats.medianAmdYtm === null ? DASH : fmt(stats.medianAmdYtm) + "%"}</div>
+                <div className="n">AMD bonds</div>
+              </div>
+              <div className="card nmc">
+                <div className="k">NMC bonds</div>
+                <div className="v">{stats.nmc}</div>
+              </div>
+              <div className="card">
+                <div className="k">Traded this week</div>
+                <div className="v">{stats.tradedWeek}</div>
+                <div className="n">of {stats.total}</div>
+              </div>
+            </div>
           </div>
-          <div className="scroll" id="tblWrap" hidden={!tableOpen}>
-            <table id="tbl">
-              <thead><tr>{TABLE_COLS.map((c) => (
-                <th key={c.k} className={c.l ? "l" : undefined} data-k={c.k}
-                    onClick={() => onSort(c.k)}
-                    aria-sort={sortKey === c.k ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
-                  {c.label}{sortKey === c.k ? (sortDir === "asc" ? " \u25B2" : " \u25BC") : ""}
-                </th>
-              ))}</tr></thead>
-              <tbody>
-                {sorted.map((b) => {
-                  const stale = isStale(b);
-                  const rowCls = [b.isNmc ? "isnmc" : "", selected === b.isin ? "sel" : "", stale ? "stale" : ""]
-                    .filter(Boolean).join(" ");
-                  const priceCls = b.price == null ? "" : b.price < 100 ? "cheap" : b.price > 100 ? "rich" : "";
-                  return (
-                    <tr key={b.isin} className={rowCls || undefined} tabIndex={0}
-                        onClick={() => setSelected(b.isin)}
-                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelected(b.isin); } }}>
-                      <td className="l">{b.isin}</td>
-                      <td className="l">
-                        {b.issuer || DASH}
-                        {b.isNmc ? <span className="tag nmc" style={{ marginLeft: 6 }}>NMC</span> : null}
-                      </td>
-                      <td>{b.ccy}</td>
-                      <td>{fmt(b.coupon)}</td>
-                      <td className={priceCls}>{fmt(b.price)}</td>
-                      <td>{fmt(b.ytm)}</td>
-                      <td>{fmt(b.close)}</td>
-                      <td>{fmt(b.ytm_close)}</td>
-                      <td>{b.maturity || DASH}</td>
-                      <td className={b.daysSinceTrade == null ? "miss" : undefined}
-                          title={b.last_trade ?? "no trade on record"}>
-                        {b.daysSinceTrade == null ? DASH : `${b.daysSinceTrade}d`}
-                      </td>
-                    </tr>
-                  );
-                })}
-                {sorted.length === 0 ? (
-                  <tr><td className="l" colSpan={TABLE_COLS.length}>
-                    <div className="empty">No instruments match the current filters</div>
-                  </td></tr>
-                ) : null}
-              </tbody>
-            </table>
+        )}
+
+        {/* ============ YIELD CURVE ============ */}
+        {tab === "curve" && (
+          <div className="tabpanel" id="panel-curve" role="tabpanel" aria-labelledby="tab-curve">
+            <div className="pair">
+              {/* ---- scatter panel ---- */}
+              <div className="panel">
+                <h2>
+                  <span>Yield to maturity against maturity</span>
+                  <em id="fitNote">{scatterNote(filtered, M)}</em>
+                </h2>
+                <Filters {...filterProps} showMode />
+                <div className="legend">
+                  <span><i style={{ background: "var(--nmc-red)" }} />NMC</span>
+                  <span><i style={{ background: "none", border: "1.5px solid var(--nmc-navy)" }} />Other issuers</span>
+                  <span><i style={{ background: "none", border: "1.5px dashed var(--nmc-navy)" }} />Fitted curve</span>
+                  <span>Dot size = amount outstanding</span>
+                </div>
+                <div className="body">
+                  <Scatter bonds={filtered} mode={M} selected={selected} onSelect={setSelected} />
+                </div>
+                <div className="method">
+                  Each dot is one bond: <b>x</b> = years to maturity, <b>y</b> = <b>{M.axis}</b>,
+                  dot size ∝ amount outstanding. The dashed line is an ordinary least-squares
+                  fit across the plotted bonds — a rough market curve, not a model.
+                  Bonds without a maturity or without a <code>{M.axis}</code> value are omitted
+                  from the chart but remain in the Screener.
+                </div>
+              </div>
+
+              {/* ---- detail panel ---- */}
+              <div className="panel">
+                <h2>
+                  <span>Selected instrument</span>
+                  <em id="selName">{selBond ? selBond.ticker : ""}</em>
+                </h2>
+                {!selBond ? (
+                  <div id="detail">
+                    <div className="empty">Click any bond in the chart to see its history</div>
+                  </div>
+                ) : (
+                  <div id="detail">
+                    <div className="facts">
+                      <div><span>Coupon</span>{selBond.coupon == null ? DASH : fmt(selBond.coupon) + "%"}</div>
+                      <div><span>Maturity</span>{selBond.maturity || DASH}</div>
+                      <div><span>Currency</span>{selBond.ccy}</div>
+                      <div><span>Outstanding</span>{fmtAmd(selBond.outstanding_amd)}{selBond.outstanding_amd == null ? "" : " " + selBond.ccy}</div>
+                      <div>
+                        <span>Last trade</span>
+                        {selBond.last_trade
+                          ? `${selBond.last_trade} (${selBond.daysSinceTrade}d)`
+                          : DASH}
+                        {isStale(selBond) ? <span className="tag" style={{ marginLeft: 6 }}>stale</span> : null}
+                      </div>
+                    </div>
+                    <Sparkline
+                      history={history}
+                      loading={histLoading}
+                      mode={M}
+                      ccyOrPct={mode === "price" || mode === "close" ? "" : "%"}
+                    />
+                    <div className="method">
+                      Sparkline: <b>{M.axis}</b> over time
+                      {M.noHist ? " (coupon has no daily series, so bid yield is shown)" : ""}.
+                      Source: <code>/api/history/{selBond.isin}</code>.
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* ============ SCREENER ============ */}
+        {tab === "screener" && (
+          <div className="tabpanel" id="panel-screener" role="tabpanel" aria-labelledby="tab-screener">
+            <div className="panel">
+              <h2>
+                <span>Investment list</span>
+                <em id="count">{filtered.length} shown</em>
+              </h2>
+              <Filters {...filterProps} />
+              <div className="scroll" id="tblWrap">
+                <table id="tbl">
+                  <thead><tr>{TABLE_COLS.map((c) => (
+                    <th key={c.k} className={c.l ? "l" : undefined} data-k={c.k}
+                        onClick={() => onSort(c.k)}
+                        aria-sort={sortKey === c.k ? (sortDir === "asc" ? "ascending" : "descending") : "none"}>
+                      {c.label}{sortKey === c.k ? (sortDir === "asc" ? " \u25B2" : " \u25BC") : ""}
+                    </th>
+                  ))}</tr></thead>
+                  <tbody>
+                    {sorted.map((b) => {
+                      const stale = isStale(b);
+                      const rowCls = [b.isNmc ? "isnmc" : "", selected === b.isin ? "sel" : "", stale ? "stale" : ""]
+                        .filter(Boolean).join(" ");
+                      const priceCls = b.price == null ? "" : b.price < 100 ? "cheap" : b.price > 100 ? "rich" : "";
+                      return (
+                        <tr key={b.isin} className={rowCls || undefined} tabIndex={0}
+                            onClick={() => setSelected(b.isin)}
+                            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelected(b.isin); } }}>
+                          <td className="l">{b.isin}</td>
+                          <td className="l">
+                            {b.issuer || DASH}
+                            {b.isNmc ? <span className="tag nmc" style={{ marginLeft: 6 }}>NMC</span> : null}
+                          </td>
+                          <td>{b.ccy}</td>
+                          <td>{fmt(b.coupon)}</td>
+                          <td className={priceCls}>{fmt(b.price)}</td>
+                          <td>{fmt(b.ytm)}</td>
+                          <td>{fmt(b.close)}</td>
+                          <td>{fmt(b.ytm_close)}</td>
+                          <td>{b.maturity || DASH}</td>
+                          <td className={b.daysSinceTrade == null ? "miss" : undefined}
+                              title={b.last_trade ?? "no trade on record"}>
+                            {b.daysSinceTrade == null ? DASH : `${b.daysSinceTrade}d`}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {sorted.length === 0 ? (
+                      <tr><td className="l" colSpan={TABLE_COLS.length}>
+                        <div className="empty">No instruments match the current filters</div>
+                      </td></tr>
+                    ) : null}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ============ ANALYTICS ============ */}
+        {tab === "analytics" && (
+          <div className="tabpanel" id="panel-analytics" role="tabpanel" aria-labelledby="tab-analytics">
+            <AnalyticsTab bonds={filtered} meta={meta} />
+          </div>
+        )}
+
+        {/* ============ PORTFOLIOS ============ */}
+        {tab === "portfolios" && (
+          <div className="tabpanel" id="panel-portfolios" role="tabpanel" aria-labelledby="tab-portfolios">
+            <PortfoliosTab bonds={bonds} meta={meta} />
+          </div>
+        )}
 
         <footer id="foot">
           Market data from{" "}
@@ -448,6 +458,84 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
         </footer>
       </div>
     </>
+  );
+}
+
+/* ============================================================================ */
+/* Shared filter bar — rendered on the Yield-curve and Screener tabs.           */
+/* `showMode` adds the #fMode quotation select (only the scatter uses it).      */
+/* ============================================================================ */
+function Filters({
+  bonds, issuerList, ccyOptions,
+  qIsin, setQIsin, qIssuer, setQIssuer,
+  issuerTypeF, setIssuerTypeF,
+  ccy, setCcy, mat, setMat,
+  onlyNmc, setOnlyNmc, hideStale, setHideStale,
+  mode, setMode, showMode = false,
+}: {
+  bonds: UiBond[]; issuerList: string[]; ccyOptions: string[];
+  qIsin: string; setQIsin: (v: string) => void;
+  qIssuer: string; setQIssuer: (v: string) => void;
+  issuerTypeF: string; setIssuerTypeF: (v: string) => void;
+  ccy: string; setCcy: (v: string) => void;
+  mat: string; setMat: (v: string) => void;
+  onlyNmc: boolean; setOnlyNmc: (v: boolean) => void;
+  hideStale: boolean; setHideStale: (v: boolean) => void;
+  mode: ModeKey; setMode: (v: ModeKey) => void;
+  showMode?: boolean;
+}) {
+  return (
+    <div className="controls">
+      <input id="qIsin" type="search" placeholder="ISIN" style={{ width: 130 }}
+             list="isinList" value={qIsin} onChange={(e) => setQIsin(e.target.value)} />
+      <datalist id="isinList">
+        {bonds.map((b) => <option key={b.isin} value={b.isin} />)}
+      </datalist>
+      <input id="qIssuer" type="search" placeholder="Issuer (type to search)" style={{ width: 190 }}
+             list="issuerList" value={qIssuer} onChange={(e) => setQIssuer(e.target.value)} />
+      <datalist id="issuerList">
+        {issuerList.map((n) => <option key={n} value={n} />)}
+      </datalist>
+      {/* NEW: issuer-type grouping */}
+      <select id="fType" title="Issuer type" value={issuerTypeF}
+              onChange={(e) => setIssuerTypeF(e.target.value)}>
+        <option value="">All issuer types</option>
+        <option value="Bank">Bank</option>
+        <option value="Credit organization">Credit organization</option>
+        <option value="Other">Other</option>
+      </select>
+      {showMode ? (
+        <select id="fMode" title="What both charts plot"
+                value={mode} onChange={(e) => setMode(e.target.value as ModeKey)}>
+          <option value="ytm">AMX bid yield</option>
+          <option value="ytm_close">AMX close yield</option>
+          <option value="price">AMX bid price</option>
+          <option value="close">AMX close price</option>
+          <option value="coupon">Coupon</option>
+        </select>
+      ) : null}
+      <select id="fCcy" title="Currency" value={ccy} onChange={(e) => setCcy(e.target.value)}>
+        <option value="">All currencies</option>
+        {ccyOptions.map((c) => <option key={c} value={c}>{c}</option>)}
+      </select>
+      <select id="fMat" value={mat} onChange={(e) => setMat(e.target.value)}>
+        <option value="">All maturities</option>
+        <option value="0-1">Under 1 year</option>
+        <option value="1-3">1 to 3 years</option>
+        <option value="3-5">3 to 5 years</option>
+        <option value="5-99">Over 5 years</option>
+      </select>
+      <label className="toggle">
+        <input type="checkbox" id="onlyNmc" checked={onlyNmc}
+               onChange={(e) => setOnlyNmc(e.target.checked)} />NMC only
+      </label>
+      <label className="toggle" id="staleLbl"
+             title="Hides bonds whose last trade is more than 20 days old.">
+        <input type="checkbox" id="hideStale" checked={hideStale}
+               onChange={(e) => setHideStale(e.target.checked)} />
+        Hide stale <span className="qm">?</span>
+      </label>
+    </div>
   );
 }
 
@@ -534,7 +622,6 @@ function Scatter({
         </clipPath>
       </defs>
 
-      {/* grid + y ticks */}
       <g className="grid">
         {yticks.map((t, i) => (
           <line key={i} x1={m.l} x2={m.l + iw} y1={sy(t)} y2={sy(t)} />
@@ -549,19 +636,16 @@ function Scatter({
         ))}
       </g>
 
-      {/* axis labels */}
       <text className="axlab" x={m.l + iw / 2} y={H - 8} textAnchor="middle">Years to maturity</text>
       <text className="axlab" transform={`translate(14 ${m.t + ih / 2}) rotate(-90)`} textAnchor="middle">
         {mode.axis}
       </text>
 
-      {/* fitted line */}
       {fit ? (
         <path className="fit" clipPath="url(#plotClip)"
               d={`M ${sx(0)} ${sy(fit.a)} L ${sx(xmax)} ${sy(fit.a + fit.b * xmax)}`} />
       ) : null}
 
-      {/* other issuers: navy outline */}
       {others.map((p) => (
         <circle key={p.b.isin} cx={sx(p.x)} cy={sy(p.y)} r={r(p.b.outstanding_amd)}
                 fill="none" stroke="var(--nmc-navy)" strokeWidth={1.4} opacity={0.8}
@@ -569,7 +653,6 @@ function Scatter({
           <title>{`${p.b.ticker} · ${p.b.issuer}\n${mode.axis}: ${fmt(p.y)} · ${p.x.toFixed(2)}y`}</title>
         </circle>
       ))}
-      {/* NMC: filled red */}
       {nmc.map((p) => (
         <circle key={p.b.isin} cx={sx(p.x)} cy={sy(p.y)} r={r(p.b.outstanding_amd)}
                 fill="var(--nmc-red)" opacity={0.9}
@@ -577,7 +660,6 @@ function Scatter({
           <title>{`${p.b.ticker} · ${p.b.issuer}\n${mode.axis}: ${fmt(p.y)} · ${p.x.toFixed(2)}y`}</title>
         </circle>
       ))}
-      {/* selected: highlight ring, drawn last */}
       {sel ? (
         <g style={{ cursor: "pointer" }} onClick={() => onSelect(sel.b.isin)}>
           <circle cx={sx(sel.x)} cy={sy(sel.y)} r={r(sel.b.outstanding_amd)}
