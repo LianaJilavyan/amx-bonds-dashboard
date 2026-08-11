@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 40" role="img" aria-label="AMX Armenia Securities Exchange">
+  <!-- Plain-text placeholder wordmark. Replace with the official AMX SVG if/when
+       you have permission to use it; the masthead expects a wide, short lockup. -->
+  <g fill="#18164c" font-family="'IBM Plex Mono', ui-monospace, monospace">
+    <text x="0" y="30" font-size="34" font-weight="600" letter-spacing="1">AMX</text>
+    <text x="86" y="18" font-size="11" font-weight="500" letter-spacing="1.5">ARMENIA</text>
+    <text x="86" y="33" font-size="11" font-weight="500" letter-spacing="1.5">SECURITIES EXCHANGE</text>
+  </g>
+</svg>
