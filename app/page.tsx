@@ -1,20 +1,10 @@
 // app/page.tsx
 // Server Component. Reads the three SMALL committed JSON files at build time,
-// merges enrichment.json into each bond, derives NMC / staleness / years-to-
-// maturity, and hands a ready-to-render array to the client dashboard.
-//
-// Why import here instead of an /api/latest route: these files total ~120 KB, so
-// importing them at build time (per ARCHITECTURE.md) is simplest and needs no
-// route. Only history.json (5 MB) is served by a route — see app/api/history.
-//
-// IMPORTANT merge rule: latest.json already carries English issuer names
-// (short_name_en). enrichment.json's issuer is Armenian. We KEEP the English one
-// for the UI/issuer search and only pull coupon / freq / outstanding / last_trade
-// (and maturity as a fallback) from enrichment. Staleness uses enrichment's
-// last_trade — the true last-trade date — not the snapshot's session date.
+// merges enrichment.json into each bond, derives NMC / issuer-type / staleness /
+// years-to-maturity, and hands a ready-to-render array to the client dashboard.
 
 import type { Bond, Enrichment } from "@/lib/normalize";
-import { isNmc } from "@/lib/normalize";
+import { isNmc, issuerType } from "@/lib/normalize";
 import type { UiBond, Meta } from "@/app/types";
 import Dashboard from "@/app/Dashboard";
 
@@ -22,7 +12,6 @@ import latest from "@/data/latest.json";
 import enrichment from "@/data/enrichment.json";
 import metaJson from "@/data/meta.json";
 
-// The imported JSON is typed loosely by TS; assert the shapes we produced upstream.
 const latestData = latest as unknown as { date: string; fetchedAt: string; bonds: Bond[] };
 const enrichmentData = enrichment as unknown as Record<string, Enrichment>;
 const meta = metaJson as unknown as Meta;
@@ -47,14 +36,13 @@ function buildBonds(): UiBond[] {
   return latestData.bonds.map((b): UiBond => {
     const e = enrichmentData[b.isin];
 
-    // Enrichment fills the fields the snapshot can't know.
     const merged: Bond = {
       ...b,
       coupon: e?.coupon ?? b.coupon,
       freq: e?.freq ?? b.freq,
       outstanding_amd: e?.outstanding_amd ?? b.outstanding_amd,
       last_trade: e?.last_trade ?? b.last_trade, // TRUE last-trade date
-      maturity: b.maturity || (e?.maturity ?? ""), // keep snapshot maturity, fall back
+      maturity: b.maturity || (e?.maturity ?? ""),
       // issuer: intentionally NOT overwritten — keep the English snapshot name.
     };
 
@@ -64,6 +52,7 @@ function buildBonds(): UiBond[] {
     return {
       ...merged,
       isNmc: isNmc(merged),
+      issuerType: issuerType(merged),
       daysSinceTrade,
       years: yearsTo(merged.maturity, latestDate),
     };
