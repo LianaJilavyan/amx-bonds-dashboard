@@ -237,3 +237,32 @@ export function instrumentEnrichment(payload: unknown): Enrichment {
 export function isNmc(b: Bond): boolean {
   return /national mortgage company/i.test(b.issuer) || b.ticker.startsWith("NMCCB");
 }
+/* ---------- issuer-type grouping (Bank / Credit organization / Other) ---------- */
+
+export type IssuerType = "Bank" | "Credit organization" | "Other";
+
+/**
+ * Force a specific issuer into a group when the name heuristic is wrong.
+ * Key by ISIN. Leave empty unless you spot a misclassification in the UI.
+ * Example: to force NMC into "Other", add  "AMNMCB..ER.": "Other".
+ */
+const ISSUER_TYPE_OVERRIDES: Record<string, IssuerType> = {
+  // "AMXXXXXXXXXX": "Other",
+};
+
+/**
+ * Classify an issuer by its (English) name:
+ *   - name contains "bank"                         -> Bank
+ *   - contains "credit" / "UCO" / "RCO"            -> Credit organization
+ *   - otherwise                                    -> Other
+ * NOTE: NMC is "National Mortgage Company RCO CJSC", so it lands in
+ * "Credit organization" here. Add an override above to move it.
+ */
+export function issuerType(b: Bond): IssuerType {
+  const forced = ISSUER_TYPE_OVERRIDES[b.isin];
+  if (forced) return forced;
+  const s = (b.issuer || "").toLowerCase();
+  if (s.includes("bank")) return "Bank";
+  if (s.includes("credit") || /\buco\b/.test(s) || /\brco\b/.test(s)) return "Credit organization";
+  return "Other";
+}
