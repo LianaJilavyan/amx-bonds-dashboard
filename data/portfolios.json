@@ -1,0 +1,17 @@
+[
+  {
+    "id": "pf_yepges3",
+    "name": "Portfolio 1",
+    "investedAmd": 1000000,
+    "holdings": [
+      {
+        "isin": "AMSWISB2RER0",
+        "weight": 25
+      },
+      {
+        "isin": "AMAMTLB23ER4",
+        "weight": 75
+      }
+    ]
+  }
+]
