@@ -1,0 +1,1698 @@
+{
+ "AMSTIGB21ER8": {
+  "coupon": 12.75,
+  "freq": 2,
+  "outstanding_amd": 847100000,
+  "issuer": "ՇՏԻԳԵՆ ՍՊԸ",
+  "maturity": "2028-02-27",
+  "last_trade": "2026-08-07"
+ },
+ "AMHSKAB21ER2": {
+  "coupon": 11.75,
+  "freq": 2,
+  "outstanding_amd": 1500000000,
+  "issuer": "ՀՍԿԱ ՓԲԸ",
+  "maturity": "2028-08-05",
+  "last_trade": "2026-08-07"
+ },
+ "AMVAGAB21ER9": {
+  "coupon": 12.5,
+  "freq": 4,
+  "outstanding_amd": 1500000000,
+  "issuer": "ՈՍԿԵ ԱԳԱ ՍՊԸ",
+  "maturity": "2028-10-17",
+  "last_trade": "2026-06-16"
+ },
+ "AMUNIBB2UER0": {
+  "coupon": 8.3,
+  "freq": 4,
+  "outstanding_amd": 9000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": null,
+  "last_trade": "2026-08-04"
+ },
+ "AMUNIBB2SER4": {
+  "coupon": 6.25,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2031-11-19",
+  "last_trade": "2026-07-23"
+ },
+ "AMUNIBB2RER6": {
+  "coupon": 9.75,
+  "freq": 4,
+  "outstanding_amd": 2000000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2027-07-09",
+  "last_trade": "2026-08-07"
+ },
+ "AMUNIBB2QER8": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2027-07-09",
+  "last_trade": "2026-08-05"
+ },
+ "AMUNIBBM1ER9": {
+  "coupon": 13.75,
+  "freq": 4,
+  "outstanding_amd": 3000000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": null,
+  "last_trade": "2026-08-10"
+ },
+ "AMUNIBB2MER7": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2026-09-05",
+  "last_trade": "2026-07-27"
+ },
+ "AMUNIBB2LER9": {
+  "coupon": 11,
+  "freq": 4,
+  "outstanding_amd": 1000000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2026-09-05",
+  "last_trade": "2026-08-10"
+ },
+ "AMTMHDB23ER6": {
+  "coupon": 8.75,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "Թիմ Հոլդինգ ՓԲԸ",
+  "maturity": "2030-02-12",
+  "last_trade": "2026-08-10"
+ },
+ "AMSWISB2RER0": {
+  "coupon": 10.25,
+  "freq": 2,
+  "outstanding_amd": 7000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2029-06-16",
+  "last_trade": "2026-07-27"
+ },
+ "AMSWISB2PER4": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 3200500,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2028-06-10",
+  "last_trade": "2026-07-23"
+ },
+ "AMSWISB2OER7": {
+  "coupon": 6.25,
+  "freq": 2,
+  "outstanding_amd": 15000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2028-06-10",
+  "last_trade": "2026-08-10"
+ },
+ "AMSWISB2NER9": {
+  "coupon": 6,
+  "freq": 2,
+  "outstanding_amd": 8148600,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2027-10-21",
+  "last_trade": "2026-08-03"
+ },
+ "AMSWISB2MER1": {
+  "coupon": 10.2,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2028-06-10",
+  "last_trade": "2026-07-02"
+ },
+ "AMSWISB2JER7": {
+  "coupon": 4.5,
+  "freq": 2,
+  "outstanding_amd": 9400000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2027-06-01",
+  "last_trade": "2026-08-05"
+ },
+ "AMSWISB2HER1": {
+  "coupon": 11.75,
+  "freq": 2,
+  "outstanding_amd": 6000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2027-06-01",
+  "last_trade": "2026-08-04"
+ },
+ "AMSWISB2FER5": {
+  "coupon": 8.5,
+  "freq": 2,
+  "outstanding_amd": 10000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2026-09-28",
+  "last_trade": "2026-08-07"
+ },
+ "AMSTAMB21ER3": {
+  "coupon": 13.5,
+  "freq": 4,
+  "outstanding_amd": 250000000,
+  "issuer": "ՍՏԱՄԻՆԱ ՍՊԸ",
+  "maturity": "2028-08-20",
+  "last_trade": "2026-07-28"
+ },
+ "AMRENSB23ER3": {
+  "coupon": 8.5,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "ՌԵՆՇԻՆ ՍՊԸ",
+  "maturity": "2031-02-02",
+  "last_trade": null
+ },
+ "AMRENSB22ER5": {
+  "coupon": 8,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "ՌԵՆՇԻՆ ՍՊԸ",
+  "maturity": "2029-02-02",
+  "last_trade": "2026-08-04"
+ },
+ "AMRENSB21ER7": {
+  "coupon": 12,
+  "freq": 2,
+  "outstanding_amd": 2300000000,
+  "issuer": "ՌԵՆՇԻՆ ՍՊԸ",
+  "maturity": "2029-02-02",
+  "last_trade": "2026-08-07"
+ },
+ "AMPROMB2FER3": {
+  "coupon": 10,
+  "freq": 4,
+  "outstanding_amd": 3000000000,
+  "issuer": "ԷՎՈԿԱԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-09-30",
+  "last_trade": "2026-08-06"
+ },
+ "AMPROMB2EER6": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԷՎՈԿԱԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-09-30",
+  "last_trade": "2026-08-06"
+ },
+ "AMPROMB2DER8": {
+  "coupon": 10.25,
+  "freq": 4,
+  "outstanding_amd": 3000000000,
+  "issuer": "ԷՎՈԿԱԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-07-25",
+  "last_trade": "2026-08-05"
+ },
+ "AMPROMB2CER0": {
+  "coupon": 5.25,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԷՎՈԿԱԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-07-25",
+  "last_trade": "2026-07-28"
+ },
+ "AMNSANB21ER4": {
+  "coupon": 12,
+  "freq": 4,
+  "outstanding_amd": 1500000000,
+  "issuer": "«ՆԱՐՍԱՆ» ՍՊԸ",
+  "maturity": "2029-01-16",
+  "last_trade": "2026-08-05"
+ },
+ "AMNOUTB21ER8": {
+  "coupon": 13,
+  "freq": 4,
+  "outstanding_amd": 618700000,
+  "issuer": "ՆՈՈՒԹ․ԱՄ  ՍՊԸ",
+  "maturity": "2028-03-07",
+  "last_trade": "2026-08-10"
+ },
+ "AMNAGCB22SH1": {
+  "coupon": 13,
+  "freq": 2,
+  "outstanding_amd": 1000000000,
+  "issuer": "ՆՅՈՒ ԷՅՋ ՔՈՆՍԹՐԱՔՇՆ ՍՊԸ",
+  "maturity": "2029-06-22",
+  "last_trade": "2026-08-06"
+ },
+ "AMNAGCB21SH3": {
+  "coupon": 14,
+  "freq": 4,
+  "outstanding_amd": 1500000000,
+  "issuer": "ՆՅՈՒ ԷՅՋ ՔՈՆՍԹՐԱՔՇՆ ՍՊԸ",
+  "maturity": "2029-02-27",
+  "last_trade": "2026-08-05"
+ },
+ "AMMTGRB21ER2": {
+  "coupon": 13,
+  "freq": 4,
+  "outstanding_amd": 2000000000,
+  "issuer": "ՄԵՏԱԼ ԳՌՈՒՊ ՍՊԸ",
+  "maturity": "2031-01-23",
+  "last_trade": "2026-08-10"
+ },
+ "AMLUYSB25ER4": {
+  "coupon": 8,
+  "freq": 2,
+  "outstanding_amd": 5000000,
+  "issuer": "ԼՈՒՅՍԵՐ ՓԲԸ",
+  "maturity": "2028-02-05",
+  "last_trade": "2026-06-30"
+ },
+ "AMLUYSB24ER7": {
+  "coupon": 12,
+  "freq": 2,
+  "outstanding_amd": 1500000000,
+  "issuer": "ԼՈՒՅՍԵՐ ՓԲԸ",
+  "maturity": "2028-06-18",
+  "last_trade": "2026-06-24"
+ },
+ "AMLUYSB23ER9": {
+  "coupon": 8,
+  "freq": 2,
+  "outstanding_amd": 4000000,
+  "issuer": "ԼՈՒՅՍԵՐ ՓԲԸ",
+  "maturity": "2027-06-12",
+  "last_trade": "2026-08-10"
+ },
+ "AMKMJOB21ER2": {
+  "coupon": 12.5,
+  "freq": 4,
+  "outstanding_amd": 1000000000,
+  "issuer": "ԿԱՄՈՒՐՋ ՈւՎԿ ՓԲԸ",
+  "maturity": "2029-02-03",
+  "last_trade": "2026-08-10"
+ },
+ "AMHEZBB2QER5": {
+  "coupon": 10.25,
+  "freq": 2,
+  "outstanding_amd": 4000000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2029-02-23",
+  "last_trade": "2026-05-07"
+ },
+ "AMHEZBB2PER7": {
+  "coupon": 5.5,
+  "freq": 2,
+  "outstanding_amd": 2000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2029-02-23",
+  "last_trade": "2026-08-06"
+ },
+ "AMHEZBB2OER0": {
+  "coupon": 10.5,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-09-30",
+  "last_trade": "2026-08-04"
+ },
+ "AMHEZBB2NER2": {
+  "coupon": 5.5,
+  "freq": 2,
+  "outstanding_amd": 5000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-09-17",
+  "last_trade": "2026-07-01"
+ },
+ "AMHEZBB2MER4": {
+  "coupon": 10.75,
+  "freq": 2,
+  "outstanding_amd": 4000000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-08-11",
+  "last_trade": "2026-08-10"
+ },
+ "AMHEZBB2LER6": {
+  "coupon": 11,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-04-16",
+  "last_trade": "2026-08-06"
+ },
+ "AMHEZBB2KER8": {
+  "coupon": 6.25,
+  "freq": 2,
+  "outstanding_amd": 2300000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2030-03-03",
+  "last_trade": "2026-08-07"
+ },
+ "AMHEZBB2JER0": {
+  "coupon": 5.5,
+  "freq": 2,
+  "outstanding_amd": 2600000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-03-03",
+  "last_trade": "2026-08-06"
+ },
+ "AMHEZBB2IER2": {
+  "coupon": 11,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-03-03",
+  "last_trade": "2026-07-27"
+ },
+ "AMHEZBB2GER6": {
+  "coupon": 10.25,
+  "freq": 2,
+  "outstanding_amd": 1500000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-07-22",
+  "last_trade": "2026-08-06"
+ },
+ "AMGRUCB22ER9": {
+  "coupon": 6.5,
+  "freq": 4,
+  "outstanding_amd": 1000000,
+  "issuer": "ԳԱՌՆԻ ԻՆՎԵՍՏ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2029-03-18",
+  "last_trade": "2026-07-24"
+ },
+ "AMGRUCB21ER1": {
+  "coupon": 12.5,
+  "freq": 4,
+  "outstanding_amd": 500000000,
+  "issuer": "ԳԱՌՆԻ ԻՆՎԵՍՏ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2029-03-18",
+  "last_trade": "2026-07-22"
+ },
+ "AMFSCRB2PER2": {
+  "coupon": 6.25,
+  "freq": 2,
+  "outstanding_amd": 2669800,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2030-02-23",
+  "last_trade": "2026-07-27"
+ },
+ "AMFSCRB2OER5": {
+  "coupon": 6,
+  "freq": 2,
+  "outstanding_amd": 2827800,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2028-02-23",
+  "last_trade": null
+ },
+ "AMFSCRB2NER7": {
+  "coupon": 10.75,
+  "freq": 2,
+  "outstanding_amd": 12000000000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-11-10",
+  "last_trade": "2026-08-10"
+ },
+ "AMFSCRB2MER9": {
+  "coupon": 6.25,
+  "freq": 2,
+  "outstanding_amd": 4000000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-09-22",
+  "last_trade": "2026-08-10"
+ },
+ "AMFSCRB2LER1": {
+  "coupon": 6.25,
+  "freq": 2,
+  "outstanding_amd": 2000000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-08-04",
+  "last_trade": "2026-07-09"
+ },
+ "AMFSCRB2JER5": {
+  "coupon": 5.25,
+  "freq": 2,
+  "outstanding_amd": 758800,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2028-02-17",
+  "last_trade": "2026-07-27"
+ },
+ "AMFSCRB2IER7": {
+  "coupon": 6.25,
+  "freq": 2,
+  "outstanding_amd": 2671500,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2028-02-17",
+  "last_trade": "2026-08-10"
+ },
+ "AMFSCRB2GER1": {
+  "coupon": 5.25,
+  "freq": 4,
+  "outstanding_amd": 685300,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-10-11",
+  "last_trade": "2026-08-06"
+ },
+ "AMFSCRB2FER3": {
+  "coupon": 6.25,
+  "freq": 4,
+  "outstanding_amd": 3448800,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-10-11",
+  "last_trade": "2026-08-10"
+ },
+ "AMFNCAB2KER7": {
+  "coupon": 11.75,
+  "freq": 4,
+  "outstanding_amd": 938000000,
+  "issuer": "ՖԻՆՔԱ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2028-11-24",
+  "last_trade": "2026-08-07"
+ },
+ "AMFNCAB2JER9": {
+  "coupon": 11.75,
+  "freq": 4,
+  "outstanding_amd": 800000000,
+  "issuer": "ՖԻՆՔԱ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2028-07-21",
+  "last_trade": "2026-08-07"
+ },
+ "AMFNCAB2IER1": {
+  "coupon": 11.5,
+  "freq": 4,
+  "outstanding_amd": 1217400000,
+  "issuer": "ՖԻՆՔԱ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2028-02-12",
+  "last_trade": "2026-08-10"
+ },
+ "AMFNCAB2GER5": {
+  "coupon": 12,
+  "freq": 4,
+  "outstanding_amd": 1100000000,
+  "issuer": "ՖԻՆՔԱ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2026-12-25",
+  "last_trade": "2026-07-24"
+ },
+ "AMFMGCB26ER2": {
+  "coupon": 7,
+  "freq": 4,
+  "outstanding_amd": 2000000,
+  "issuer": "Առաջին Հիփոթեքային Ընկերություն ՈՒՎԿ ՍՊԸ",
+  "maturity": "2027-06-18",
+  "last_trade": "2026-07-17"
+ },
+ "AMFMGCB25ER4": {
+  "coupon": 11.8,
+  "freq": 4,
+  "outstanding_amd": 300000000,
+  "issuer": "Առաջին Հիփոթեքային Ընկերություն ՈՒՎԿ ՍՊԸ",
+  "maturity": "2027-06-18",
+  "last_trade": "2026-07-17"
+ },
+ "AMFARMB21ER4": {
+  "coupon": 12.25,
+  "freq": 4,
+  "outstanding_amd": 1200000000,
+  "issuer": "ՖԱՐՄ ԿՐԵԴԻՏ ԱՐՄԵՆԻԱ ՈՒՎԿ ԱԿ",
+  "maturity": "2026-11-02",
+  "last_trade": "2026-07-22"
+ },
+ "AMASGRB22ER7": {
+  "coupon": 7,
+  "freq": 4,
+  "outstanding_amd": 1140600,
+  "issuer": "Ասկե գրուպ ԲԲԸ",
+  "maturity": "2031-06-11",
+  "last_trade": "2026-07-08"
+ },
+ "AMASGRB21ER9": {
+  "coupon": 12,
+  "freq": 4,
+  "outstanding_amd": 1552000000,
+  "issuer": "Ասկե գրուպ ԲԲԸ",
+  "maturity": "2031-06-11",
+  "last_trade": "2026-08-06"
+ },
+ "XS3239201414": {
+  "coupon": 6.6,
+  "freq": 2,
+  "outstanding_amd": 600000000,
+  "issuer": "Դիլիջան Ֆայնենս Բ․ Վ․",
+  "maturity": "2031-01-22",
+  "last_trade": null
+ },
+ "AMARBKB2SER0": {
+  "coupon": 5.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱՐԱՐԱՏԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-06-10",
+  "last_trade": "2026-07-30"
+ },
+ "AMARBKB2QER4": {
+  "coupon": 5.5,
+  "freq": 4,
+  "outstanding_amd": 2000000,
+  "issuer": "ԱՐԱՐԱՏԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-09-18",
+  "last_trade": "2026-07-17"
+ },
+ "AMARBBB2PER7": {
+  "coupon": 10,
+  "freq": 4,
+  "outstanding_amd": 2500000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2028-04-03",
+  "last_trade": "2026-08-06"
+ },
+ "AMARBBB2NER2": {
+  "coupon": 5.5,
+  "freq": 4,
+  "outstanding_amd": 2000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2028-02-10",
+  "last_trade": "2026-06-30"
+ },
+ "AMARBBB2MER4": {
+  "coupon": 10.25,
+  "freq": 4,
+  "outstanding_amd": 3000000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2028-02-10",
+  "last_trade": "2026-08-04"
+ },
+ "AMARBBB2LER6": {
+  "coupon": 10.25,
+  "freq": 4,
+  "outstanding_amd": 2500000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2028-02-14",
+  "last_trade": "2026-08-10"
+ },
+ "AMARBBB2KER8": {
+  "coupon": 5.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2027-12-11",
+  "last_trade": "2026-08-05"
+ },
+ "AMARBBB2JER0": {
+  "coupon": 10.25,
+  "freq": 4,
+  "outstanding_amd": 3000000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2027-12-11",
+  "last_trade": "2026-07-28"
+ },
+ "AMARBBB2IER2": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2027-04-16",
+  "last_trade": "2026-07-27"
+ },
+ "AMARBBB2GER6": {
+  "coupon": 9.75,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2027-02-21",
+  "last_trade": "2026-08-07"
+ },
+ "AMANLBB2UER9": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 537490000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2028-01-01",
+  "last_trade": "2026-07-31"
+ },
+ "AMANLBB2TER1": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 7042600,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2027-08-28",
+  "last_trade": "2026-08-10"
+ },
+ "AMANLBB2SER3": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2027-04-24",
+  "last_trade": "2026-07-28"
+ },
+ "AMANLBB2RER5": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 2253700,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2027-09-26",
+  "last_trade": "2026-07-24"
+ },
+ "AMANLBB2PER9": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2027-08-13",
+  "last_trade": "2026-05-21"
+ },
+ "AMANLBBM7ER5": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 2500000000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2029-06-15",
+  "last_trade": "2026-08-06"
+ },
+ "AMANLBBM4ER2": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 9090200,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2028-11-27",
+  "last_trade": "2026-06-15"
+ },
+ "AMANLBBM3ER4": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2028-10-17",
+  "last_trade": "2026-04-30"
+ },
+ "AMANLBBM1ER8": {
+  "coupon": 10.3,
+  "freq": 2,
+  "outstanding_amd": 2824600000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2029-01-01",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBNPER6": {
+  "coupon": 8,
+  "freq": 2,
+  "outstanding_amd": 50000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": null,
+  "last_trade": "2026-08-07"
+ },
+ "AMAMRBBNNER1": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-12-22",
+  "last_trade": "2026-07-30"
+ },
+ "AMAMRBBNLER5": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 11600000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-10-15",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBNKER7": {
+  "coupon": 3.5,
+  "freq": 4,
+  "outstanding_amd": 5250000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-09-01",
+  "last_trade": "2026-07-24"
+ },
+ "AMAMRBBNJER9": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-09-01",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBNIER1": {
+  "coupon": 9.75,
+  "freq": 4,
+  "outstanding_amd": 12000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-09-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNFER7": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2029-06-16",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBNEER0": {
+  "coupon": 9.25,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-06-16",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBNDER2": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2029-04-14",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNCER4": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-04-14",
+  "last_trade": "2026-07-20"
+ },
+ "AMAMRBBNBER6": {
+  "coupon": 9.5,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-03-10",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBN9ER5": {
+  "coupon": 9.5,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2026-12-16",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBN8ER7": {
+  "coupon": 9.75,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-06-13",
+  "last_trade": "2026-08-05"
+ },
+ "AMAMRBBN7ER9": {
+  "coupon": 9.5,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2026-09-13",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBN6ER1": {
+  "coupon": 6,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2031-04-22",
+  "last_trade": "2026-08-04"
+ },
+ "AMAMRBBN5ER3": {
+  "coupon": 5.75,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2029-04-22",
+  "last_trade": "2026-07-27"
+ },
+ "AMAMRBBN4ER6": {
+  "coupon": 5.25,
+  "freq": 4,
+  "outstanding_amd": 12500400,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-04-22",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBN3ER8": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 9668000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-04-22",
+  "last_trade": "2026-08-07"
+ },
+ "AMAMRBBMSER2": {
+  "coupon": 6,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2029-02-15",
+  "last_trade": "2026-07-27"
+ },
+ "AMAMRBBMRER4": {
+  "coupon": 5.5,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-02-15",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBMQER6": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 5660000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-02-15",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBMNER3": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 20000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-06-26",
+  "last_trade": "2026-08-10"
+ },
+ "AMAMRBBMIER3": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 25000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-02-20",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBMFER9": {
+  "coupon": 4,
+  "freq": 4,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2026-09-07",
+  "last_trade": "2026-08-10"
+ },
+ "AMAGRTB22KT8": {
+  "coupon": 12.25,
+  "freq": 2,
+  "outstanding_amd": 400000000,
+  "issuer": "ԱԳՐՈՏԵԽ  ՍՊԸ",
+  "maturity": "2029-06-22",
+  "last_trade": "2026-08-03"
+ },
+ "AMAGRTB21KT0": {
+  "coupon": 13,
+  "freq": 4,
+  "outstanding_amd": 600000000,
+  "issuer": "ԱԳՐՈՏԵԽ  ՍՊԸ",
+  "maturity": "2028-12-17",
+  "last_trade": "2026-08-07"
+ },
+ "AMACBAB2PER5": {
+  "coupon": 10.25,
+  "freq": 2,
+  "outstanding_amd": 10000000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2031-02-23",
+  "last_trade": "2026-08-04"
+ },
+ "AMACBAB2OER8": {
+  "coupon": 5.5,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2031-01-15",
+  "last_trade": "2026-08-06"
+ },
+ "AMACBAB2NER0": {
+  "coupon": 10.5,
+  "freq": 2,
+  "outstanding_amd": 10000000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2031-01-15",
+  "last_trade": "2026-08-06"
+ },
+ "AMACBAB2MER2": {
+  "coupon": 5.5,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2030-08-25",
+  "last_trade": "2026-07-16"
+ },
+ "AMACBAB2LER4": {
+  "coupon": 10.5,
+  "freq": 2,
+  "outstanding_amd": 10000000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2030-08-25",
+  "last_trade": "2026-08-07"
+ },
+ "AMACBAB2KER6": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 2320400000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2030-02-20",
+  "last_trade": "2026-08-10"
+ },
+ "AMACBAB2JER8": {
+  "coupon": 9.5,
+  "freq": 2,
+  "outstanding_amd": 1116800000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-02-20",
+  "last_trade": "2026-08-06"
+ },
+ "AMACBAB2IER0": {
+  "coupon": 10.5,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2029-11-11",
+  "last_trade": "2026-08-11"
+ },
+ "AMACBAB2HER2": {
+  "coupon": 6,
+  "freq": 2,
+  "outstanding_amd": 13419700,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2029-10-21",
+  "last_trade": "2026-08-04"
+ },
+ "AMACBAB2GER4": {
+  "coupon": 11,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2029-10-21",
+  "last_trade": "2026-08-11"
+ },
+ "AMACBAB2FER6": {
+  "coupon": 4.5,
+  "freq": 2,
+  "outstanding_amd": 3639900,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2026-11-02",
+  "last_trade": "2026-08-10"
+ },
+ "AMNMCCB2UER5": {
+  "coupon": 9,
+  "freq": 2,
+  "outstanding_amd": 2500000000,
+  "issuer": "Ազգային Հիփոթեքային ընկերություն ՎՎԿ ՓԲԸ",
+  "maturity": "2031-06-16",
+  "last_trade": "2026-08-07"
+ },
+ "AMNMCCB2TER7": {
+  "coupon": 9,
+  "freq": 2,
+  "outstanding_amd": 5298000000,
+  "issuer": "Ազգային Հիփոթեքային ընկերություն ՎՎԿ ՓԲԸ",
+  "maturity": "2030-11-27",
+  "last_trade": "2026-07-30"
+ },
+ "AMNMCCB2SER9": {
+  "coupon": 9.75,
+  "freq": 2,
+  "outstanding_amd": 7000000000,
+  "issuer": "Ազգային Հիփոթեքային ընկերություն ՎՎԿ ՓԲԸ",
+  "maturity": "2028-04-10",
+  "last_trade": "2026-08-10"
+ },
+ "AMNMCCB2RER1": {
+  "coupon": 9.5,
+  "freq": 2,
+  "outstanding_amd": 2238720000,
+  "issuer": "Ազգային Հիփոթեքային ընկերություն ՎՎԿ ՓԲԸ",
+  "maturity": "2027-10-16",
+  "last_trade": "2026-07-08"
+ },
+ "AMNMCCB2QER3": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Ազգային Հիփոթեքային ընկերություն ՎՎԿ ՓԲԸ",
+  "maturity": "2027-03-26",
+  "last_trade": "2026-07-08"
+ },
+ "AMNMCCB2PER5": {
+  "coupon": 11,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Ազգային Հիփոթեքային ընկերություն ՎՎԿ ՓԲԸ",
+  "maturity": "2026-12-20",
+  "last_trade": "2026-08-06"
+ },
+ "AMINECB2TER1": {
+  "coupon": 3,
+  "freq": 4,
+  "outstanding_amd": 4000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-07-16",
+  "last_trade": null
+ },
+ "AMINECB2RER5": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2029-04-14",
+  "last_trade": null
+ },
+ "AMINECB2QER7": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-07-03",
+  "last_trade": null
+ },
+ "AMINECB2PER9": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 10000000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2029-04-03",
+  "last_trade": "2026-08-10"
+ },
+ "AMINECB2OER2": {
+  "coupon": 5.25,
+  "freq": 2,
+  "outstanding_amd": 8000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-12-10",
+  "last_trade": "2026-07-24"
+ },
+ "AMINECB2MER6": {
+  "coupon": 5.25,
+  "freq": 4,
+  "outstanding_amd": 12000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-08-28",
+  "last_trade": "2026-08-05"
+ },
+ "AMINECB2KER0": {
+  "coupon": 5.5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-06-09",
+  "last_trade": "2026-08-07"
+ },
+ "AMINECB2JER2": {
+  "coupon": 5.25,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2027-09-09",
+  "last_trade": "2026-07-21"
+ },
+ "AMINECB2IER4": {
+  "coupon": 10.5,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2027-12-09",
+  "last_trade": "2026-07-22"
+ },
+ "AMINECB2FER0": {
+  "coupon": 4.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2027-06-27",
+  "last_trade": "2026-07-21"
+ },
+ "AMINECB2DER5": {
+  "coupon": 4.5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2026-08-15",
+  "last_trade": "2026-07-28"
+ },
+ "AMHELCB22ER4": {
+  "coupon": 7.25,
+  "freq": 2,
+  "outstanding_amd": 30000000,
+  "issuer": "ՀԷՑ ՓԲԸ",
+  "maturity": "2028-07-15",
+  "last_trade": "2026-08-05"
+ },
+ "AMGLBSB22ER8": {
+  "coupon": 8.25,
+  "freq": 2,
+  "outstanding_amd": 2000000,
+  "issuer": "Գլոբալ Շիփփինգ ՍՊԸ",
+  "maturity": "2028-12-12",
+  "last_trade": "2026-08-06"
+ },
+ "AMEVTMB21ER9": {
+  "coupon": 12.5,
+  "freq": 2,
+  "outstanding_amd": 500000000,
+  "issuer": "Եվրոթերմ ՓԲԸ",
+  "maturity": "2026-11-28",
+  "last_trade": "2026-08-04"
+ },
+ "AMEABRB21ER0": {
+  "coupon": 6,
+  "freq": 2,
+  "outstanding_amd": 20000000,
+  "issuer": "Եվրասիական Զարգացման Բանկ",
+  "maturity": "2026-08-15",
+  "last_trade": "2026-08-05"
+ },
+ "AMCOVSB2QER3": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 5000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2028-11-18",
+  "last_trade": "2026-06-03"
+ },
+ "AMCOVSB2OER8": {
+  "coupon": 9.75,
+  "freq": 2,
+  "outstanding_amd": 2000000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2027-11-18",
+  "last_trade": "2026-05-27"
+ },
+ "AMCOVSB2NER0": {
+  "coupon": 10.25,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2027-05-26",
+  "last_trade": "2026-07-27"
+ },
+ "AMCOVSB2MER2": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2028-04-16",
+  "last_trade": "2026-08-07"
+ },
+ "AMCOVSB2LER4": {
+  "coupon": 4.5,
+  "freq": 2,
+  "outstanding_amd": 5000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2027-11-01",
+  "last_trade": "2026-08-06"
+ },
+ "AMCOVSB2KER6": {
+  "coupon": 9.75,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2026-11-01",
+  "last_trade": "2026-08-05"
+ },
+ "AMCOVSB2JER8": {
+  "coupon": 4.75,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2027-04-17",
+  "last_trade": "2026-07-15"
+ },
+ "AMASGRB24KT6": {
+  "coupon": 7.5,
+  "freq": 4,
+  "outstanding_amd": 15000000,
+  "issuer": "Ասկե գրուպ ԲԲԸ",
+  "maturity": "2034-09-16",
+  "last_trade": "2026-04-03"
+ },
+ "AMASGRB23KT8": {
+  "coupon": 12.25,
+  "freq": 4,
+  "outstanding_amd": 15000000000,
+  "issuer": "Ասկե գրուպ ԲԲԸ",
+  "maturity": "2034-09-16",
+  "last_trade": "2026-07-30"
+ },
+ "AMARLVB21ER3": {
+  "coupon": 12,
+  "freq": 2,
+  "outstanding_amd": 1000000000,
+  "issuer": "Արինտերլև ՓԲԸ",
+  "maturity": "2028-04-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMARLSB21ER9": {
+  "coupon": 12,
+  "freq": 4,
+  "outstanding_amd": 1000000000,
+  "issuer": "ԱՐՄԼԻԶԻՆԳ ՈւՎԿ ՓԲԸ",
+  "maturity": "2029-02-04",
+  "last_trade": "2026-08-07"
+ },
+ "AMAMTLB22ER6": {
+  "coupon": 7.85,
+  "freq": 4,
+  "outstanding_amd": 20000000,
+  "issuer": "Տելեկոմ Արմենիա ԲԲԸ",
+  "maturity": "2028-12-05",
+  "last_trade": "2026-06-29"
+ },
+ "AMAMTLB21ER8": {
+  "coupon": 7.95,
+  "freq": 4,
+  "outstanding_amd": 45000000,
+  "issuer": "Տելեկոմ Արմենիա ԲԲԸ",
+  "maturity": "2029-12-05",
+  "last_trade": "2026-08-07"
+ },
+ "AMFSCRB2DER8": {
+  "coupon": 11,
+  "freq": 4,
+  "outstanding_amd": 2000000000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2026-10-19",
+  "last_trade": "2026-08-11"
+ },
+ "AMALPHB22ER4": {
+  "coupon": 11.3,
+  "freq": 1,
+  "outstanding_amd": 1500000000,
+  "issuer": "Ալֆա-Ֆարմ ՓԲԸ",
+  "maturity": "2028-12-10",
+  "last_trade": "2026-08-11"
+ },
+ "AMGLBSB21ER0": {
+  "coupon": 12,
+  "freq": 2,
+  "outstanding_amd": 1500000000,
+  "issuer": "Գլոբալ Շիփփինգ ՍՊԸ",
+  "maturity": "2028-12-12",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMTLB23ER4": {
+  "coupon": 11.5,
+  "freq": 4,
+  "outstanding_amd": 3900000000,
+  "issuer": "Տելեկոմ Արմենիա ԲԲԸ",
+  "maturity": "2029-12-05",
+  "last_trade": "2026-08-11"
+ },
+ "AMARBKB2PER6": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 2000000,
+  "issuer": "ԱՐԱՐԱՏԲԱՆԿ ԲԲԸ",
+  "maturity": "2026-09-18",
+  "last_trade": "2026-08-11"
+ },
+ "AMSWISB2SER8": {
+  "coupon": 10.5,
+  "freq": 2,
+  "outstanding_amd": 7000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2030-06-16",
+  "last_trade": "2026-08-11"
+ },
+ "AMSWISB2QER2": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 7000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2029-02-04",
+  "last_trade": "2026-08-11"
+ },
+ "AMSWISB2LER3": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2027-08-12",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNHER3": {
+  "coupon": 4.5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-07-22",
+  "last_trade": "2026-08-11"
+ },
+ "AMTMHDB21ER0": {
+  "coupon": 12,
+  "freq": 4,
+  "outstanding_amd": 1400000000,
+  "issuer": "Թիմ Հոլդինգ ՓԲԸ",
+  "maturity": "2029-12-03",
+  "last_trade": "2026-08-11"
+ },
+ "AMSWISB2TER6": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2030-06-08",
+  "last_trade": "2026-08-11"
+ },
+ "AMHEZBB2RER3": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2029-03-02",
+  "last_trade": "2026-08-11"
+ },
+ "AMSWISB2IER9": {
+  "coupon": 6,
+  "freq": 2,
+  "outstanding_amd": 10000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2027-06-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMUNIBB2PER0": {
+  "coupon": 5,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2027-02-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMUNIBBM2ER7": {
+  "coupon": 5.6,
+  "freq": 4,
+  "outstanding_amd": 2758000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2029-04-20",
+  "last_trade": "2026-08-11"
+ },
+ "AMARBBB2OER0": {
+  "coupon": 10,
+  "freq": 4,
+  "outstanding_amd": 2000000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2028-03-03",
+  "last_trade": "2026-08-11"
+ },
+ "AMARBBB2HER4": {
+  "coupon": 4.75,
+  "freq": 2,
+  "outstanding_amd": 6450200,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2027-02-21",
+  "last_trade": "2026-08-11"
+ },
+ "AMFSCRB2EER6": {
+  "coupon": 10.25,
+  "freq": 4,
+  "outstanding_amd": 1175900000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-10-11",
+  "last_trade": "2026-08-11"
+ },
+ "AMTMHDB22ER8": {
+  "coupon": 9,
+  "freq": 4,
+  "outstanding_amd": 9000000,
+  "issuer": "Թիմ Հոլդինգ ՓԲԸ",
+  "maturity": "2029-12-03",
+  "last_trade": "2026-08-11"
+ },
+ "AMHELCB23ER2": {
+  "coupon": 7.25,
+  "freq": 2,
+  "outstanding_amd": 30000000,
+  "issuer": "ՀԷՑ ՓԲԸ",
+  "maturity": "2029-08-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMUNIBB2OER3": {
+  "coupon": 11,
+  "freq": 4,
+  "outstanding_amd": 2000000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2027-02-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMINTMB23ER3": {
+  "coupon": 11.7,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "Ինթելլիջենթ Մենեջմենթ ՍՊԸ",
+  "maturity": "2029-05-18",
+  "last_trade": "2026-08-11"
+ },
+ "AMHELCB25ER7": {
+  "coupon": 10.75,
+  "freq": 4,
+  "outstanding_amd": 6200000000,
+  "issuer": "ՀԷՑ ՓԲԸ",
+  "maturity": "2030-11-18",
+  "last_trade": "2026-08-11"
+ },
+ "AMDLNTB21ER0": {
+  "coupon": 13.5,
+  "freq": 2,
+  "outstanding_amd": 2500000000,
+  "issuer": "ԴԱԼԱՆ  ԹԵՔՆՈԼՈՋԻՍ ՍՊԸ",
+  "maturity": "2028-11-10",
+  "last_trade": "2026-08-11"
+ },
+ "AMANLBBM5ER9": {
+  "coupon": 10,
+  "freq": 4,
+  "outstanding_amd": 2439000000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2029-03-17",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNGER5": {
+  "coupon": 9.25,
+  "freq": 4,
+  "outstanding_amd": 3250000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-07-15",
+  "last_trade": "2026-08-11"
+ },
+ "AMSWISB2KER5": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 4650000000,
+  "issuer": "Արմսվիսբանկ ՓԲԸ",
+  "maturity": "2026-10-21",
+  "last_trade": "2026-08-11"
+ },
+ "AMARBKB2RER2": {
+  "coupon": 5.75,
+  "freq": 4,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱՐԱՐԱՏԲԱՆԿ ԲԲԸ",
+  "maturity": "2028-03-26",
+  "last_trade": "2026-08-11"
+ },
+ "AMANLBB2QER7": {
+  "coupon": 9.5,
+  "freq": 4,
+  "outstanding_amd": 2549750000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2026-09-17",
+  "last_trade": "2026-08-11"
+ },
+ "AMINECB2HER6": {
+  "coupon": 10,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2026-12-27",
+  "last_trade": "2026-08-11"
+ },
+ "AMCOVSB2PER5": {
+  "coupon": 5.25,
+  "freq": 2,
+  "outstanding_amd": 5000000,
+  "issuer": "Կոնվերս բանկ ՓԲԸ",
+  "maturity": "2029-11-18",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNAER8": {
+  "coupon": 9.25,
+  "freq": 4,
+  "outstanding_amd": 5000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2027-03-10",
+  "last_trade": "2026-08-11"
+ },
+ "AMACBAB2EER9": {
+  "coupon": 9.5,
+  "freq": 2,
+  "outstanding_amd": 1398900000,
+  "issuer": "ԱԿԲԱ ԲԱՆԿ ԲԲԸ",
+  "maturity": "2026-11-02",
+  "last_trade": "2026-08-11"
+ },
+ "AMARBBB2FER8": {
+  "coupon": 9.75,
+  "freq": 4,
+  "outstanding_amd": 10000000000,
+  "issuer": "ԱՄԻՕ ԲԱՆԿ  ՓԲԸ",
+  "maturity": "2026-08-15",
+  "last_trade": "2026-08-11"
+ },
+ "AMINECB2NER4": {
+  "coupon": 10.25,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-12-10",
+  "last_trade": "2026-08-11"
+ },
+ "AMHEZBB2HER4": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 3500000,
+  "issuer": "ՀԱՅԷԿՈՆՈՄԲԱՆԿ ԲԲԸ",
+  "maturity": "2027-07-22",
+  "last_trade": "2026-08-11"
+ },
+ "AMANLBBM2ER6": {
+  "coupon": 5,
+  "freq": 2,
+  "outstanding_amd": 5000000,
+  "issuer": "ԱյԴի բանկ ՓԲԸ",
+  "maturity": "2028-07-01",
+  "last_trade": "2026-08-11"
+ },
+ "AMUNIBB2TER2": {
+  "coupon": 13.75,
+  "freq": 4,
+  "outstanding_amd": 3500000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": null,
+  "last_trade": "2026-08-11"
+ },
+ "AMINECB2LER8": {
+  "coupon": 10.5,
+  "freq": 2,
+  "outstanding_amd": 5000000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2028-06-26",
+  "last_trade": "2026-08-11"
+ },
+ "AMDLNTB22ER8": {
+  "coupon": 8.75,
+  "freq": 2,
+  "outstanding_amd": 3000000,
+  "issuer": "ԴԱԼԱՆ  ԹԵՔՆՈԼՈՋԻՍ ՍՊԸ",
+  "maturity": "2028-11-10",
+  "last_trade": "2026-08-11"
+ },
+ "AMCRFOB21ER6": {
+  "coupon": 12.75,
+  "freq": 4,
+  "outstanding_amd": 400000000,
+  "issuer": "Քրաուդֆանդինգ Ֆորմուլա ՍՊԸ",
+  "maturity": "2028-01-07",
+  "last_trade": "2026-08-11"
+ },
+ "AMFSCRB2KER3": {
+  "coupon": 10.75,
+  "freq": 2,
+  "outstanding_amd": 6198700000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2027-08-04",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNOER9": {
+  "coupon": 8.5,
+  "freq": 2,
+  "outstanding_amd": 50000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": null,
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNQER4": {
+  "coupon": 9.75,
+  "freq": 4,
+  "outstanding_amd": 15000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2029-04-15",
+  "last_trade": "2026-08-11"
+ },
+ "AMFSTLB21ER4": {
+  "coupon": 13,
+  "freq": 4,
+  "outstanding_amd": 1500000000,
+  "issuer": "ՖՐԻ ՍԹԱՅԼ ՍՊԸ",
+  "maturity": "2028-12-24",
+  "last_trade": "2026-08-11"
+ },
+ "AMFSCRB2HER9": {
+  "coupon": 10.75,
+  "freq": 2,
+  "outstanding_amd": 3000000000,
+  "issuer": "Ֆասթ Բանկ ՓԲԸ",
+  "maturity": "2028-02-17",
+  "last_trade": "2026-08-11"
+ },
+ "AMFNCAB2HER3": {
+  "coupon": 11.75,
+  "freq": 4,
+  "outstanding_amd": 850000000,
+  "issuer": "ՖԻՆՔԱ ՈՒՎԿ ՓԲԸ",
+  "maturity": "2027-11-27",
+  "last_trade": "2026-08-11"
+ },
+ "AMAMRBBNMER3": {
+  "coupon": 9.75,
+  "freq": 4,
+  "outstanding_amd": 10000000000,
+  "issuer": "ԱՄԵՐԻԱԲԱՆԿ ՓԲԸ",
+  "maturity": "2028-12-10",
+  "last_trade": "2026-08-11"
+ },
+ "AMINTMB22ER5": {
+  "coupon": 7.9,
+  "freq": 2,
+  "outstanding_amd": 2500000,
+  "issuer": "Ինթելլիջենթ Մենեջմենթ ՍՊԸ",
+  "maturity": "2028-12-15",
+  "last_trade": "2026-08-11"
+ },
+ "AMINTMB21ER7": {
+  "coupon": 11.9,
+  "freq": 2,
+  "outstanding_amd": 1000000000,
+  "issuer": "Ինթելլիջենթ Մենեջմենթ ՍՊԸ",
+  "maturity": "2028-12-15",
+  "last_trade": "2026-08-11"
+ },
+ "AMINECB2SER3": {
+  "coupon": 10,
+  "freq": 4,
+  "outstanding_amd": 15000000000,
+  "issuer": "Ինեկոբանկ ՓԲԸ",
+  "maturity": "2029-07-16",
+  "last_trade": "2026-08-11"
+ },
+ "AMHELCB24ER0": {
+  "coupon": 7.45,
+  "freq": 4,
+  "outstanding_amd": 20000000,
+  "issuer": "ՀԷՑ ՓԲԸ",
+  "maturity": "2030-11-18",
+  "last_trade": "2026-08-11"
+ },
+ "AMHELCB21ER6": {
+  "coupon": 11.4,
+  "freq": 2,
+  "outstanding_amd": 32000000000,
+  "issuer": "ՀԷՑ ՓԲԸ",
+  "maturity": "2026-12-11",
+  "last_trade": "2026-08-11"
+ },
+ "AMUNIBB2NER5": {
+  "coupon": 10.75,
+  "freq": 4,
+  "outstanding_amd": 1000000000,
+  "issuer": "Յունիբանկ ԲԲԸ",
+  "maturity": "2026-10-02",
+  "last_trade": "2026-08-11"
+ },
+ "AMKTELB21ER4": {
+  "coupon": 7.65,
+  "freq": 2,
+  "outstanding_amd": 80000000,
+  "issuer": "Վիվա Արմենիա ՓԲԸ",
+  "maturity": "2028-02-12",
+  "last_trade": "2026-08-11"
+ }
+}
