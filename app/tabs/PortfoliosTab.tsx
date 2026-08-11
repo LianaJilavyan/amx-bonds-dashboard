@@ -3,19 +3,16 @@
 
 // app/tabs/PortfoliosTab.tsx
 // Increment 3: client-side sign-in gate + portfolio builder (up to 3), saved to
-// localStorage. Portfolio ANALYTICS (weighted YTM / duration / DV01 / scenarios /
-// concentration) arrive with Increment 2's math engine; this file ships the
-// builder, storage, and the metrics computable from data already in hand
-// (invested amount, expected annual coupon income, weighted coupon).
+// localStorage, with two ways to push into the repo:
+//   - "Export portfolios.json" downloads the file to commit by hand (no token).
+//   - "Save to GitHub" posts to /api/portfolios, which commits the file server-side
+//     after checking a SEPARATE save passphrase held in server env vars. That
+//     passphrase is NOT the Test/test01 sign-in and never ships in this bundle.
+// Whatever lands in data/portfolios.json is picked up by the next report run.
 //
-// Portfolios live in THIS browser's localStorage. "Export portfolios.json" downloads
-// them so they can be committed into /data — that committed file is what the
-// send-report GitHub Action reads. This manual export is deliberate: a browser app
-// has nowhere safe to keep a repo-write credential, so nothing here writes to GitHub.
-//
-// SECURITY NOTE: the Test/test01 login is a client-side gate only. The password is
-// visible in the shipped JS bundle — it keeps casual viewers out, not attackers.
-// Do not treat portfolios here as private or secure.
+// SECURITY NOTE: the Test/test01 login is a client-side gate only (password is in the
+// shipped JS) — it keeps casual viewers out, not attackers. Real write protection for
+// "Save to GitHub" is the server-side passphrase checked in app/api/portfolios/route.ts.
 
 import { useEffect, useMemo, useState } from "react";
 import type { UiBond, Meta } from "@/app/types";
@@ -61,7 +58,6 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
   const [pass, setPass] = useState("");
   const [loginErr, setLoginErr] = useState("");
 
-  // Restore the "signed in" flag for this browser on mount.
   useEffect(() => {
     try {
       if (localStorage.getItem(LS_AUTH) === "1") setAuthed(true);
@@ -84,12 +80,11 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
     try { localStorage.removeItem(LS_AUTH); } catch { /* ignore */ }
   }
 
-  /* ---- portfolios (persisted) ---- */
+  /* ---- portfolios (persisted to localStorage) ---- */
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
 
-  // Load once on mount.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(LS_KEY);
@@ -104,7 +99,6 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
     setLoaded(true);
   }, []);
 
-  // Persist on every change (after the initial load).
   useEffect(() => {
     if (!loaded) return;
     try { localStorage.setItem(LS_KEY, JSON.stringify(portfolios)); } catch { /* ignore */ }
@@ -163,9 +157,7 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
     patchActive({ holdings });
   }
 
-  /* ---- NEW: export for the emailed report ----
-     Downloads ALL portfolios as portfolios.json. Commit that file into the repo's
-     /data folder (GitHub web UI drag-drop is fine); the send-report Action reads it. */
+  /* ---- export: download portfolios.json to commit by hand (no token) ---- */
   function exportPortfolios() {
     const blob = new Blob([JSON.stringify(portfolios, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -176,6 +168,37 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+  }
+
+  /* ---- save to GitHub via the server route (separate save passphrase) ---- */
+  const [showSave, setShowSave] = useState(false);
+  const [savePass, setSavePass] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function saveToGithub() {
+    if (portfolios.length === 0 || !savePass) return;
+    setSaving(true);
+    setSaveMsg(null);
+    try {
+      const res = await fetch("/api/portfolios", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passphrase: savePass, portfolios }),
+      });
+      const data = await res.json().catch(() => ({} as { error?: string }));
+      if (!res.ok) {
+        setSaveMsg({ ok: false, text: data?.error || `Save failed (${res.status}).` });
+      } else {
+        setSaveMsg({ ok: true, text: "Saved to GitHub — it will appear in the next report run." });
+        setSavePass("");
+        setShowSave(false);
+      }
+    } catch {
+      setSaveMsg({ ok: false, text: "Network error while saving." });
+    } finally {
+      setSaving(false);
+    }
   }
 
   /* ---- lookups + light metrics (no duration engine yet) ---- */
@@ -199,7 +222,7 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
       resolved += w;
       wSum += w;
       cWeighted += w * b.coupon;
-      incomeShare += w * (b.coupon / 100); // fraction of invested amount as annual coupon
+      incomeShare += w * (b.coupon / 100);
     }
     const income = active.investedAmd > 0 ? active.investedAmd * incomeShare : null;
     const wCoupon = wSum > 0 ? cWeighted / wSum : null;
@@ -253,7 +276,7 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
         </em>
       </h2>
 
-      {/* portfolio selector row + export */}
+      {/* portfolio selector row + save/export */}
       <div className="controls">
         {portfolios.map((p) => (
           <button key={p.id} className="btn"
@@ -271,14 +294,47 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
         )}
         <button
           className="btn"
+          onClick={() => { setShowSave((s) => !s); setSaveMsg(null); }}
+          disabled={portfolios.length === 0}
+          title="Save portfolios to the repo (requires the save passphrase)"
+          style={{ marginLeft: "auto", borderColor: "var(--nmc-red)", color: "var(--nmc-red)" }}
+        >
+          Save to GitHub
+        </button>
+        <button
+          className="btn"
           onClick={exportPortfolios}
           disabled={portfolios.length === 0}
-          title="Download portfolios.json to commit into /data (feeds the emailed report)"
-          style={{ marginLeft: "auto" }}
+          title="Download portfolios.json to commit into /data by hand"
         >
           Export portfolios.json
         </button>
       </div>
+
+      {/* save passphrase row (only when Save to GitHub is toggled) */}
+      {showSave ? (
+        <div className="controls" style={{ marginTop: 8 }}>
+          <span className="note">Save passphrase:</span>
+          <input
+            type="password"
+            value={savePass}
+            placeholder="server save passphrase"
+            style={{ width: 240 }}
+            onChange={(e) => setSavePass(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") saveToGithub(); }}
+            aria-label="Save passphrase"
+          />
+          <button className="btn" onClick={saveToGithub} disabled={saving || !savePass}>
+            {saving ? "Saving…" : "Confirm save"}
+          </button>
+          <button className="btn" onClick={() => { setShowSave(false); setSavePass(""); }}>
+            Cancel
+          </button>
+        </div>
+      ) : null}
+      {saveMsg ? (
+        <div className={saveMsg.ok ? "note" : "miss"} style={{ marginTop: 6 }}>{saveMsg.text}</div>
+      ) : null}
 
       {!active ? (
         <div className="empty">Create a portfolio to begin.</div>
