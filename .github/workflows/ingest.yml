@@ -1,0 +1,52 @@
+# .github/workflows/ingest.yml
+# Nightly AMX ingest: 18:00 UTC = 22:00 Asia/Yerevan (UTC+4, no DST).
+# Also runnable manually via the "Run workflow" button (workflow_dispatch).
+name: ingest
+
+on:
+  schedule:
+    - cron: "0 18 * * *"   # Actions schedules can start a few minutes late — acceptable
+  workflow_dispatch:
+
+permissions:
+  contents: write           # lets the built-in GITHUB_TOKEN push the data commit
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install          # not `npm ci`: the repo has no package-lock.json (browser-only setup)
+
+      - name: Fetch and normalize AMX data
+        run: npx tsx scripts/fetch.mjs
+
+      # Runs even when the fetch step fails, so the error status written into
+      # data/meta.json gets committed and the site can show it. The job still
+      # shows red because the fetch step failed.
+      - name: Commit data
+        if: ${{ always() }}
+        run: |
+          git config user.name "amx-ingest-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase
+          git add data
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "data: $(TZ=Asia/Yerevan date +%F)"
+            git push
+          fi
+        # NOTE: no [skip ci] — the push must trigger the Vercel deploy.
