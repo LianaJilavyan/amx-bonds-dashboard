@@ -2,10 +2,26 @@
  * lib/normalize.ts
  * Bond type + mapping from the raw AMX API response to our Bond record.
  *
- * ⚠️ FIELD NAMES BELOW ARE UNVERIFIED GUESSES (Phase 1).
- * The AMX endpoints are undocumented. Each field lists several candidate
- * key names; pick() tries them in order. In Phase 2, paste the real payload
- * into the chat and we will replace the guesses with exact names.
+ * ✅ FINALIZED (Phase 2) against a real payload from
+ * GET https://amx.am/api/getMarketData/corporate_bonds captured 2026-08-11.
+ *
+ * Real shape:
+ *   { "data": [ {
+ *       id, isin_id, isin, ticker, trades,
+ *       maturity_date: "YYYY-MM-DD" | null,        // null seen (e.g. UNIBBU)
+ *       short_name, short_name_en, short_name_ru, short_id,
+ *       list: "BBOND" | ...,                       // listing board
+ *       last_date: "YYYY-MM-DD",                   // ⚠️ may be quote date, not last TRADE
+ *       cur: "AMD" | "USD" | ...,
+ *       price: { change, change_percent, bid, ask, avg, open, close, high, low },
+ *       yield: { same keys },                      // all values are STRINGS; "-" = missing
+ *       dls, vol, val,                             // deals / volume / value for the day
+ *       rates: [ ... ]                             // FX-converted quotes; not used
+ *   } ] }
+ *
+ * NOT present in the snapshot: coupon, frequency, amount outstanding.
+ * Those come from getInstrument/{ISIN} and are filled in by the backfill /
+ * enrichment step; until then they are null.
  *
  * Shared by scripts/fetch.mjs (run via `tsx`) and, later, the frontend.
  */
@@ -21,12 +37,12 @@ export type Bond = {
   ytm: number | null;        // bid yield %
   ytm_ask: number | null;
   ytm_close: number | null;
-  coupon: number | null;
-  freq: number | null;
-  maturity: string;          // YYYY-MM-DD
-  last_trade: string | null; // YYYY-MM-DD
-  outstanding_amd: number | null;
-  listing: string | null;
+  coupon: number | null;     // null until enriched from getInstrument
+  freq: number | null;       // null until enriched from getInstrument
+  maturity: string;          // YYYY-MM-DD; "" when AMX reports null (e.g. undated/perpetual)
+  last_trade: string | null; // from `last_date` — verify meaning against the AMX site
+  outstanding_amd: number | null; // null until enriched from getInstrument
+  listing: string | null;    // AMX `list`, e.g. "BBOND"
 };
 
 /** One compact history point per ISIN per day (short keys — file grows daily). */
@@ -40,104 +56,84 @@ export type HistoryPoint = {
   yc: number | null;         // yield close
 };
 
-type Row = Record<string, unknown>;
+/* ---------- raw AMX shapes (only the fields we read) ---------- */
 
-/* ---------- small parsing helpers ---------- */
+type AmxQuoteBlock = {
+  bid?: string | number | null;
+  ask?: string | number | null;
+  close?: string | number | null;
+};
 
-/** Parse "7.25", "7.25%", "1,234.5", 7.25 → number; anything else → null. */
+type AmxRow = {
+  isin?: string | null;
+  ticker?: string | null;
+  short_name_en?: string | null;
+  short_name?: string | null;
+  cur?: string | null;
+  list?: string | null;
+  maturity_date?: string | null;
+  last_date?: string | null;
+  price?: AmxQuoteBlock | null;
+  yield?: AmxQuoteBlock | null;
+};
+
+type AmxSnapshot = { data?: AmxRow[] };
+
+/* ---------- parsing helpers ---------- */
+
+/** Parse AMX numerics: "94.0339", "17.2999", 7.25 → number; "-", "", null → null. */
 function num(v: unknown): number | null {
-  if (v === null || v === undefined || v === "") return null;
+  if (v === null || v === undefined || v === "" || v === "-") return null;
   if (typeof v === "number") return Number.isFinite(v) ? v : null;
   if (typeof v === "string") {
     const cleaned = v.replace(/%/g, "").replace(/\s/g, "").replace(/,/g, "");
+    if (cleaned === "" || cleaned === "-") return null;
     const n = Number(cleaned);
     return Number.isFinite(n) ? n : null;
   }
   return null;
 }
 
-/** Normalize a date-ish value ("2026-08-11", "11.08.2026", epoch ms) → "YYYY-MM-DD" or null. */
+/** AMX dates are already "YYYY-MM-DD"; validate and trim any time suffix. */
 function isoDate(v: unknown): string | null {
-  if (v === null || v === undefined || v === "") return null;
-  if (typeof v === "number") {
-    const dt = new Date(v > 1e12 ? v : v * 1000); // ms vs seconds epoch
-    return Number.isNaN(dt.getTime()) ? null : dt.toISOString().slice(0, 10);
-  }
-  if (typeof v === "string") {
-    const s = v.trim();
-    let m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);           // 2026-08-11...
-    if (m) return `${m[1]}-${m[2]}-${m[3]}`;
-    m = s.match(/^(\d{2})[./](\d{2})[./](\d{4})/);          // 11.08.2026 / 11/08/2026
-    if (m) return `${m[3]}-${m[2]}-${m[1]}`;
-    const dt = new Date(s);
-    return Number.isNaN(dt.getTime()) ? null : dt.toISOString().slice(0, 10);
-  }
-  return null;
-}
-
-/** Return the first present, non-empty value among candidate keys (case-insensitive). */
-function pick(row: Row, candidates: string[]): unknown {
-  const lower = new Map(Object.keys(row).map((k) => [k.toLowerCase(), k]));
-  for (const c of candidates) {
-    const real = lower.get(c.toLowerCase());
-    if (real !== undefined) {
-      const v = row[real];
-      if (v !== null && v !== undefined && v !== "") return v;
-    }
-  }
-  return null;
-}
-
-/** The payload root might be an array, or wrapped ({ data: [...] } etc.). Find the row array. */
-function findRows(payload: unknown): Row[] {
-  if (Array.isArray(payload)) return payload as Row[];
-  if (payload && typeof payload === "object") {
-    const obj = payload as Row;
-    for (const key of ["data", "rows", "result", "results", "bonds", "items", "instruments"]) {
-      const v = obj[key];
-      if (Array.isArray(v)) return v as Row[];
-      // one level deeper, e.g. { data: { rows: [...] } }
-      if (v && typeof v === "object") {
-        for (const inner of Object.values(v as Row)) {
-          if (Array.isArray(inner)) return inner as Row[];
-        }
-      }
-    }
-  }
-  return [];
+  if (typeof v !== "string") return null;
+  const m = v.trim().match(/^(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : null;
 }
 
 /* ---------- main mapping ---------- */
 
 export function normalizeSnapshot(payload: unknown): Bond[] {
-  const rows = findRows(payload);
-  const bonds: Bond[] = [];
+  const rows = (payload as AmxSnapshot)?.data;
+  if (!Array.isArray(rows)) return [];
 
+  const bonds: Bond[] = [];
   for (const r of rows) {
-    // ⚠️ UNVERIFIED candidate keys — to be finalized in Phase 2 against the real payload.
-    const isin = String(pick(r, ["isin", "ISIN", "code", "symbol", "security_code"]) ?? "").trim();
+    const isin = (r.isin ?? "").trim();
     if (!isin) continue; // a bond without an identifier is unusable
 
-    const ccyRaw = String(pick(r, ["currency", "ccy", "cur", "currency_code"]) ?? "").toUpperCase();
+    const ccyRaw = (r.cur ?? "").toUpperCase();
+    // AMX quotes corporate bonds in AMD/USD/EUR; default defensively to AMD.
     const ccy = (["AMD", "USD", "EUR"].includes(ccyRaw) ? ccyRaw : "AMD") as Bond["ccy"];
 
     bonds.push({
       isin,
-      ticker: String(pick(r, ["ticker", "symbol", "short_name", "code"]) ?? isin).trim(),
-      issuer: String(pick(r, ["issuer", "issuer_name", "issuerName", "company", "organization", "emitent"]) ?? "").trim(),
+      ticker: (r.ticker ?? isin).trim(),
+      // English name preferred; Armenian short_name as fallback so issuer is never empty.
+      issuer: (r.short_name_en ?? r.short_name ?? "").trim(),
       ccy,
-      price:     num(pick(r, ["bid", "bid_price", "bidPrice", "price_bid", "best_bid_price"])),
-      ask:       num(pick(r, ["ask", "ask_price", "askPrice", "offer", "best_ask_price"])),
-      close:     num(pick(r, ["close", "close_price", "closePrice", "last_price", "closing_price"])),
-      ytm:       num(pick(r, ["bid_yield", "yield_bid", "bidYield", "ytm_bid", "best_bid_yield"])),
-      ytm_ask:   num(pick(r, ["ask_yield", "yield_ask", "askYield", "ytm_ask", "best_ask_yield"])),
-      ytm_close: num(pick(r, ["close_yield", "yield_close", "closeYield", "ytm_close", "last_yield"])),
-      coupon:    num(pick(r, ["coupon", "coupon_rate", "couponRate", "interest_rate", "rate"])),
-      freq:      num(pick(r, ["coupon_frequency", "frequency", "freq", "coupon_period", "periodicity"])),
-      maturity:  isoDate(pick(r, ["maturity", "maturity_date", "maturityDate", "redemption_date"])) ?? "",
-      last_trade: isoDate(pick(r, ["last_trade", "last_trade_date", "lastTradeDate", "last_deal_date", "trade_date"])),
-      outstanding_amd: num(pick(r, ["outstanding", "amount_outstanding", "outstanding_amount", "issue_volume", "volume"])),
-      listing: (pick(r, ["listing", "list", "market", "board", "listing_category"]) as string | null) ?? null,
+      price:     num(r.price?.bid),
+      ask:       num(r.price?.ask),
+      close:     num(r.price?.close),
+      ytm:       num(r.yield?.bid),
+      ytm_ask:   num(r.yield?.ask),
+      ytm_close: num(r.yield?.close),
+      coupon: null,           // not in snapshot — enriched from getInstrument later
+      freq: null,             // not in snapshot — enriched from getInstrument later
+      maturity:  isoDate(r.maturity_date) ?? "",
+      last_trade: isoDate(r.last_date),
+      outstanding_amd: null,  // not in snapshot — enriched from getInstrument later
+      listing: r.list ?? null,
     });
   }
   return bonds;
@@ -146,4 +142,10 @@ export function normalizeSnapshot(payload: unknown): Bond[] {
 /** Build the compact daily history point for one bond. */
 export function toHistoryPoint(b: Bond, date: string): HistoryPoint {
   return { d: date, pb: b.price, pa: b.ask, pc: b.close, yb: b.ytm, ya: b.ytm_ask, yc: b.ytm_close };
+}
+
+/** NMC detection, verified against the real payload: issuer
+ *  "National Mortgage Company RCO CJSC", tickers NMCCBP/Q/R/S/T/U... */
+export function isNmc(b: Bond): boolean {
+  return /national mortgage company/i.test(b.issuer) || b.ticker.startsWith("NMCCB");
 }
