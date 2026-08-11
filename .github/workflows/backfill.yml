@@ -1,0 +1,52 @@
+# .github/workflows/backfill.yml
+# Manual-only. Builds full per-ISIN history + enrichment by calling
+# getInstrument/{ISIN} for every bond in data/latest.json (≤1 req/s), then
+# commits data/history.json and data/enrichment.json in a single commit.
+#
+# Run it AFTER at least one successful ingest (latest.json must exist).
+# Safe to re-run: history merge is idempotent.
+name: backfill
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ingest          # shares the ingest lock so backfill and nightly never overlap
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    # ~90 bonds x 1s throttle + fetch time is a few minutes; 20 min is plenty.
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Backfill per-ISIN history and enrichment
+        run: npx tsx scripts/backfill.mjs
+
+      - name: Commit data
+        if: ${{ always() }}
+        run: |
+          git config user.name "amx-ingest-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git commit -m "backfill: history + enrichment $(TZ=Asia/Yerevan date +%F)"
+          git pull --rebase --autostash origin main
+          git push
