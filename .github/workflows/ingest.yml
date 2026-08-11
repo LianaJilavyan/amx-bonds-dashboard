@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
 
@@ -41,12 +41,15 @@ jobs:
         run: |
           git config user.name "amx-ingest-bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull --rebase
           git add data
+          # Nothing changed? Stop cleanly (e.g. an idempotent re-run on the same day).
           if git diff --cached --quiet; then
             echo "No data changes to commit."
-          else
-            git commit -m "data: $(TZ=Asia/Yerevan date +%F)"
-            git push
+            exit 0
           fi
-        # NOTE: no [skip ci] — the push must trigger the Vercel deploy.
+          git commit -m "data: $(TZ=Asia/Yerevan date +%F)"
+          # Pull any commits made since checkout (e.g. your web edits), replaying
+          # our commit on top. --autostash is belt-and-braces; there's nothing
+          # unstaged at this point because we just committed.
+          git pull --rebase --autostash origin main
+          git push
