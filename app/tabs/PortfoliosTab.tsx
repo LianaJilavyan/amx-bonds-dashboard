@@ -1,3 +1,4 @@
+// app/tabs/PortfoliosTab.tsx
 "use client";
 
 // app/tabs/PortfoliosTab.tsx
@@ -6,6 +7,11 @@
 // concentration) arrive with Increment 2's math engine; this file ships the
 // builder, storage, and the metrics computable from data already in hand
 // (invested amount, expected annual coupon income, weighted coupon).
+//
+// Portfolios live in THIS browser's localStorage. "Export portfolios.json" downloads
+// them so they can be committed into /data — that committed file is what the
+// send-report GitHub Action reads. This manual export is deliberate: a browser app
+// has nowhere safe to keep a repo-write credential, so nothing here writes to GitHub.
 //
 // SECURITY NOTE: the Test/test01 login is a client-side gate only. The password is
 // visible in the shipped JS bundle — it keeps casual viewers out, not attackers.
@@ -157,6 +163,21 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
     patchActive({ holdings });
   }
 
+  /* ---- NEW: export for the emailed report ----
+     Downloads ALL portfolios as portfolios.json. Commit that file into the repo's
+     /data folder (GitHub web UI drag-drop is fine); the send-report Action reads it. */
+  function exportPortfolios() {
+    const blob = new Blob([JSON.stringify(portfolios, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "portfolios.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
   /* ---- lookups + light metrics (no duration engine yet) ---- */
   const byIsin = useMemo(() => {
     const m = new Map<string, UiBond>();
@@ -166,9 +187,6 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
 
   const totalWeight = active ? active.holdings.reduce((s, h) => s + (h.weight || 0), 0) : 0;
 
-  // Metrics we CAN compute from data in hand: expected annual coupon income and
-  // market-value-weighted coupon (over holdings that resolve to a known bond with
-  // a coupon). Full YTM/duration/DV01/scenarios come with Increment 2.
   const light = useMemo(() => {
     if (!active || active.holdings.length === 0) {
       return { income: null as number | null, wCoupon: null as number | null, coverage: 0 };
@@ -235,7 +253,7 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
         </em>
       </h2>
 
-      {/* portfolio selector row */}
+      {/* portfolio selector row + export */}
       <div className="controls">
         {portfolios.map((p) => (
           <button key={p.id} className="btn"
@@ -251,6 +269,15 @@ export default function PortfoliosTab({ bonds }: { bonds: UiBond[]; meta: Meta }
         ) : (
           <span className="note">Maximum of {MAX_PORTFOLIOS} portfolios reached</span>
         )}
+        <button
+          className="btn"
+          onClick={exportPortfolios}
+          disabled={portfolios.length === 0}
+          title="Download portfolios.json to commit into /data (feeds the emailed report)"
+          style={{ marginLeft: "auto" }}
+        >
+          Export portfolios.json
+        </button>
       </div>
 
       {!active ? (
