@@ -15,11 +15,11 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
   font-family:"Noto Sans",system-ui,sans-serif;font-size:18px;line-height:1.55}
-.wrap{max-width:1620px;margin:0 auto;padding:26px 20px 70px}
+.wrap{max-width:1620px;margin:0 auto;padding:26px 22px 70px}
 
 /* masthead */
 .mast{background:var(--head-bg);border-bottom:3px solid var(--nmc-red)}
-.mast-in{max-width:1620px;margin:0 auto;padding:22px 20px 20px;display:flex;
+.mast-in{max-width:1620px;margin:0 auto;padding:22px 22px 20px;display:flex;
   align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
 .mast-title{flex:1 1 420px;min-width:0}
 .logos{display:flex;align-items:center;gap:18px;flex-wrap:wrap;flex:0 0 auto}
