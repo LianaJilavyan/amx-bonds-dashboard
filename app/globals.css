@@ -153,3 +153,14 @@ tr.stale td{color:var(--stale)}
 footer{color:var(--faint);font-size:14px;font-family:"IBM Plex Mono",monospace;
   border-top:1px solid var(--line);padding-top:16px;margin-top:30px;line-height:1.75}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ============ TAB BAR (IBM Plex Mono, NMC-red active) ============ */
+.tabs{display:flex;gap:2px;flex-wrap:wrap;border-bottom:2px solid var(--line);
+  margin:22px 0 0}
+.tab{font-family:"IBM Plex Mono",monospace;font-size:14px;letter-spacing:.08em;
+  text-transform:uppercase;padding:11px 18px;cursor:pointer;background:none;
+  border:none;border-bottom:2px solid transparent;margin-bottom:-2px;color:var(--muted)}
+.tab:hover{color:var(--nmc-red)}
+.tab[aria-selected="true"]{color:var(--nmc-red);border-bottom-color:var(--nmc-red);
+  font-weight:600}
+.tab:focus-visible{outline:2px solid var(--nmc-red);outline-offset:2px}
+.tabpanel{margin-top:22px}
