@@ -260,20 +260,8 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
               </span>
             </span>
             
-              href="/export"
-              style={{
-                display: "inline-block",
-                padding: "5px 12px",
-                borderRadius: 6,
-                border: "1.5px solid var(--nmc-red)",
-                color: "var(--nmc-red)",
-                fontWeight: 600,
-                fontSize: 13,
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-              }}
-            >
-              Export report ↗
+              <a href="/export" style={{ display: "inline-block", padding: "5px 12px", borderRadius: "6px", border: "1.5px solid var(--nmc-red)", color: "var(--nmc-red)", fontWeight: 600, fontSize: "13px", textDecoration: "none", whiteSpace: "nowrap" }}>
+              Export report &#8599;
             </a>
           </div>
           <p className="lede" id="lede">
