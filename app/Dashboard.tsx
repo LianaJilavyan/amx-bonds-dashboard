@@ -1,3 +1,4 @@
+// app/Dashboard.tsx
 "use client";
 
 // app/Dashboard.tsx
@@ -251,13 +252,29 @@ export default function Dashboard({ bonds, meta }: { bonds: UiBond[]; meta: Meta
           <div className="sub" id="stamp">
             {`MARKET DATE ${latestDate} \u00b7 ${bonds.length} INSTRUMENTS`}
           </div>
-          <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             <span className={`badge${fresh ? "" : " warn"}`} id="fresh">
               <span className="pip" />
               <span id="freshText">
                 {fresh ? "Data current" : `Last successful update ${latestDate}`}
               </span>
             </span>
+            
+              href="/export"
+              style={{
+                display: "inline-block",
+                padding: "5px 12px",
+                borderRadius: 6,
+                border: "1.5px solid var(--nmc-red)",
+                color: "var(--nmc-red)",
+                fontWeight: 600,
+                fontSize: 13,
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Export report ↗
+            </a>
           </div>
           <p className="lede" id="lede">
             Daily snapshot of <b>AMX corporate bonds</b> — bid/ask/close in both{" "}
