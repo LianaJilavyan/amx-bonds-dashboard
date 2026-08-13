@@ -1,11 +1,12 @@
 {
- "latestDate": "2026-08-12",
+ "latestDate": "2026-08-13",
  "dates": [
   "2026-08-11",
-  "2026-08-12"
+  "2026-08-12",
+  "2026-08-13"
  ],
- "bondCount": 213,
+ "bondCount": 212,
  "lastRunStatus": "ok",
  "lastError": null,
- "lastRunAt": "2026-08-12T18:51:19.359Z"
+ "lastRunAt": "2026-08-13T18:52:02.101Z"
 }
